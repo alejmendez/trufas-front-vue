@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .input {
+    @apply block w-full px-4 py-2 mt-2 text-rose-700 bg-white border rounded-md focus:border-rose-400 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40
+  }
+  .checkbox {
+    @apply border-gray-300 border-2 text-black focus:border-gray-300 focus:ring-black
+  }
+  .btn-primary {
+    @apply px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 active:bg-gray-700
+  }
+  .router-link-exact-active{
+    @apply bg-gray-200 text-gray-800 transition duration-400 ease-in-out
+  }
+}
