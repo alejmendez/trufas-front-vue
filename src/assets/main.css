@@ -3,17 +3,22 @@
 @tailwind utilities;
 
 
-@layer components {
-  .input {
-    @apply block w-full px-4 py-2 mt-2 text-rose-700 bg-white border rounded-md focus:border-rose-400 focus:ring-rose-300 focus:outline-none focus:ring focus:ring-opacity-40
-  }
-  .checkbox {
-    @apply border-gray-300 border-2 text-black focus:border-gray-300 focus:ring-black
-  }
-  .btn-primary {
-    @apply px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 active:bg-gray-700
-  }
-  .router-link-exact-active{
-    @apply bg-gray-200 text-gray-800 transition duration-400 ease-in-out
-  }
+*, :before, :after, :root {
+  --vf-primary: #212226;
+  --vf-primary-darker: #09090A;
+  --vf-danger: #ef4444;
+  --vf-danger-lighter: #fee2e2;
+  --vf-success: #10b981;
+  --vf-success-lighter: #d1fae5;
+
+  --vf-gray-50: #f9fafb;
+  --vf-gray-100: #f3f4f6;
+  --vf-gray-200: #e5e7eb;
+  --vf-gray-300: #d1d5db;
+  --vf-gray-400: #9ca3af;
+  --vf-gray-500: #6b7280;
+  --vf-gray-600: #4b5563;
+  --vf-gray-700: #374151;
+  --vf-gray-800: #1f2937;
+  --vf-gray-900: #111827;
 }

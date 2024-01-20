@@ -1,13 +1,23 @@
-import { post } from '@/utils/request'
+import { useAuthenticateStore } from '@/stores/auth'
+import { pb } from '@/utils/pocket_base'
 
-const LoginRequest = (data) => {
-  return post({
-    path: 'auth/login',
-    data,
-  })
+export const Login = async ({ email, password }) => {
+  const auth = useAuthenticateStore()
+
+  const authData = await pb.collection('users').authWithPassword(email, password);
+  auth.authenticate(authData)
 }
 
-export const Login = async ({ email, password, remember }) => {
-  const response = await LoginRequest({ email, password, remember })
-  console.log(response)
+export const Logout = () => {
+  const auth = useAuthenticateStore()
+  auth.logout()
+}
+
+export const getAuth = () => pb.authStore
+export const getCurrentUser = () => pb.authStore.model
+export const isValid = () => pb.authStore.isValid
+export const getToken = () => pb.authStore.token
+export const getAvatarUrlUser = (size) => {
+  const { model } = pb.authStore
+  return pb.files.getUrl(model, model.avatar, {'thumb': size})
 }

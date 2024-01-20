@@ -1,51 +1,57 @@
 <script setup>
-import { reactive } from 'vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-import VButton from '@/components/form/VButton.vue'
-import VInput from '@/components/form/VInput.vue'
-import VCheckbox from '@/components/form/VCheckbox.vue'
 import { Login } from '@/services/auth/login'
 
-const form = reactive({
-  email: 'alejmendez.87@gmail.com',
-  password: '12345678',
-  remember: true,
-})
+const router = useRouter()
 
-const handlerSubmit = () => {
-  Login(form)
+const form = ref(null)
+
+const submitHandler = async () => {
+  try {
+    await Login(form.value)
+
+    router.push({
+      name: 'dashboard',
+    })
+  } catch (error) {
+    console.log("error")
+  }
 }
 </script>
 
 <template>
   <div class="h-screen flex items-center justify-center" style="background-color: #CC6844;">
-    <div class="w-full md:max-w-lg p-6 bg-white border-gray-900 rounded-md shadow-md border lg:max-w-md">
-      <h1 class="text-3xl font-semibold text-center text-purple-700">SW Agricola</h1>
-      <form class="mt-6" @submit.prevent="handlerSubmit">
-        <v-input
+    <div class="w-full md:max-w-lg p-6 bg-white border-gray-300 rounded-md shadow-md border lg:max-w-md">
+      <h1 class="text-3xl font-semibold text-center text-gray-900">SW Agricola</h1>
+      <Vueform
+        v-model="form"
+        :endpoint="false"
+        @submit="submitHandler"
+        :display-errors="false"
+      >
+        <TextElement
+          name="email"
           label="Correo electrónico"
-          type="email"
-          v-model="form.email"
+          input-type="email"
+          rules="required|email"
         />
-        <v-input
-          class-wrapper="mt-4"
+        <TextElement
+          name="password"
           label="Contraseña"
-          type="password"
-          v-model="form.password"
+          input-type="password"
+          rules="required"
         />
-
-        <v-checkbox
-          class-wrapper="mt-4"
-          label="Recordarme"
-          v-model="form.remember"
+        <CheckboxElement name="remember" text="Recordarme" />
+        <ButtonElement
+          name="submit"
+          :submits="true"
+          button-label="Ingresar"
+          :full="true"
+          size="lg"
         />
-
-        <div class="mt-6">
-          <v-button class="w-full">
-            Ingresar
-          </v-button>
-        </div>
-      </form>
+      </Vueform>
       <p class="mt-8 font-medium text-center text-gray-700">
         <a href="#" class="hover:underline">Restablecer contraseña</a>
       </p>

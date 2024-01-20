@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { isValid } from '@/services/auth/login'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,5 +22,12 @@ const router = createRouter({
     },
   ]
 })
+
+router.beforeEach((to) => {
+  if (!isValid() && to.name !== 'auth.login') {
+    return { name: 'auth.login' }
+  }
+})
+
 
 export default router

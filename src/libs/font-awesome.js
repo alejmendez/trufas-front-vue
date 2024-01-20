@@ -1,9 +1,13 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+
+const icons = [
+  faBars, faSun, faMoon,
+]
 
 export const initFontAwesome = app => {
-  library.add(faBars)
+  icons.map(i => library.add(i))
 
   app.component('FontAwesomeIcon', FontAwesomeIcon)
 }
