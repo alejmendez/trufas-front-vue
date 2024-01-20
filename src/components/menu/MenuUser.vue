@@ -5,6 +5,7 @@ import { getCurrentUser, getAvatarUrlUser, Logout } from '@/services/auth/login'
 const root = ref(null)
 
 const user = getCurrentUser()
+console.log(user)
 const avatarUrl = getAvatarUrlUser('36x36')
 
 const showDropDown = ref(false)
@@ -33,7 +34,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="w-[200px]" ref="root">
+  <div class="w-[40px]" ref="root">
     <!-- User login -->
     <div
       class="flex items-center justify-start space-x-4"
@@ -44,10 +45,6 @@ onUnmounted(() => {
         :src="avatarUrl"
         alt=""
       >
-      <div class="font-semibold text-gray-400 dark:text-white text-left">
-        <div>{{ user.name }}</div>
-        <div class="text-xs text-gray-500 dark:text-gray-400">Admin</div>
-      </div>
     </div>
     <!-- Drop down -->
     <div
@@ -58,14 +55,17 @@ onUnmounted(() => {
       aria-labelledby="menu-button"
       tabindex="-1"
     >
+      <div class="font-semibold text-left block px-4 py-2">
+        <div>{{ user.name }}</div>
+      </div>
       <div class="py-1 text-left" role="none">
         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-        <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1">
+        <a href="#" class="text-gray-700 block px-4 py-2" role="menuitem" tabindex="-1">
           Account settings
         </a>
         <a
           href="#"
-          class="text-gray-700 block px-4 py-2 text-sm"
+          class="text-gray-700 block px-4 py-2"
           role="menuitem"
           tabindex="-1"
           @click="signOutHandler"

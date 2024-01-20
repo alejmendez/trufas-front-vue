@@ -1,7 +1,9 @@
 import { pb } from '@/utils/pocket_base'
 
 export const Login = async ({ email, password }) => {
-  await pb.collection('users').authWithPassword(email, password);
+  await pb.collection('users').authWithPassword(email, password, {
+    expand: 'role'
+  });
 }
 
 export const Logout = () => {

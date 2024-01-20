@@ -1,26 +1,22 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 import MenuElement from './MenuElement.vue'
-
-const menuList = [
-  {
-    to: { name: 'dashboard' },
-    text: 'Dashboard',
-  },
-  {
-    to: { name: 'auth.login' },
-    text: 'Login',
-  },
-]
 
 </script>
 <template>
-  <aside class="h-[calc(100vh-50px)] bg-gray-800 py-[20px]">
+  <aside class="h-[calc(100vh-64px)] py-[20px]">
     <div class="flex flex-col justify-between h-full px-[20px] space-y-[10px]">
       <div class="flex flex-col justify-between space-y-[10px]">
-        <MenuElement v-for="link in menuList" :key="link.text" :link="link" />
+        <MenuElement :link="{ to: { name: 'dashboard' }, text: 'Escritorio' }" />
+        <div>
+          Configuraciones
+        </div>
+        <MenuElement :link="{ to: { name: 'auth.login' }, text: 'Usuarios' }" />
+        <MenuElement :link="{ to: { name: 'auth.login' }, text: 'Campos' }" />
+        <MenuElement :link="{ to: { name: 'auth.login' }, text: 'Cuarteles' }" />
+        <MenuElement :link="{ to: { name: 'auth.login' }, text: 'Plantas' }" />
       </div>
-      <div class="h-[50px]">
+      <!--
+      <div class="h-[64px]">
         <div>
           <router-link to="/setting"
             class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-300 hover:text-gray-800  transition duration-400 ease-in-out">
@@ -34,6 +30,7 @@ const menuList = [
           </router-link>
         </div>
       </div>
+      -->
     </div>
   </aside>
 </template>

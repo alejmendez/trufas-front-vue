@@ -12,29 +12,26 @@ const toggleSideBar = () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex">
-    <!-- Side bar -->
-    <div class="w-[400px] h-full bg-gray-200 text-white" v-show="showSide">
-      <div class="h-[50px] bg-gray-900 flex justify-start  items-center ">
+  <div class="w-screen h-screen flex bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white">
+    <div class="w-[320px] h-full" v-show="showSide">
+      <div class="flex justify-start items-center h-[64px] border-b">
         <div class="px-[20px]">
           <h3 class="font-bold text-xl">SW Agricola</h3>
         </div>
       </div>
       <SideBarLeft />
     </div>
-    <div class="w-full h-full bg-gray-400">
-      <div class="h-[50px] bg-gray-100 flex items-center shadow-sm px-[20px] w-full py-[10px] z-10 border-b ">
-        <!-- Hambuger menu -->
-        <div class="cursor-pointer w-[30px]" @click="toggleSideBar">
+    <div class="w-full h-full">
+      <div class="flex items-center w-full h-[64px] border-b px-[20px] py-[10px] z-10">
+        <div class="cursor-pointer rounded-lg outline-none transition duration-75 text-gray-400 hover:text-gray-500 focus-visible:ring-primary-600 border border-gray-400 rounded px-2 py-1" @click="toggleSideBar">
           <FontAwesomeIcon icon="fa-solid fa-bars" />
         </div>
-        <!-- Search bar -->
 
         <div class="w-[calc(100%-30px)] flex justify-end">
           <MenuUser />
         </div>
       </div>
-      <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
+      <div class="h-[calc(100vh-64px)] bg-gray-50 p-[20px]">
         <main class="p-[20px] h-full">
           <slot></slot>
         </main>
