@@ -1,16 +1,11 @@
-import { useAuthenticateStore } from '@/stores/auth'
 import { pb } from '@/utils/pocket_base'
 
 export const Login = async ({ email, password }) => {
-  const auth = useAuthenticateStore()
-
-  const authData = await pb.collection('users').authWithPassword(email, password);
-  auth.authenticate(authData)
+  await pb.collection('users').authWithPassword(email, password);
 }
 
 export const Logout = () => {
-  const auth = useAuthenticateStore()
-  auth.logout()
+  pb.authStore.clear()
 }
 
 export const getAuth = () => pb.authStore

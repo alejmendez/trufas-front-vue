@@ -7,8 +7,12 @@ import { Login } from '@/services/auth/login'
 const router = useRouter()
 
 const form = ref(null)
+const errorLogin = ref('')
+const loading = ref(false)
 
 const submitHandler = async () => {
+  errorLogin.value = ''
+  loading.value = true
   try {
     await Login(form.value)
 
@@ -16,7 +20,9 @@ const submitHandler = async () => {
       name: 'dashboard',
     })
   } catch (error) {
-    console.log("error")
+    errorLogin.value = 'Correo electrónico o Contraseña incorrectos, intentelo nuevamente.'
+  } finally {
+    loading.value = false
   }
 }
 </script>
@@ -24,7 +30,7 @@ const submitHandler = async () => {
 <template>
   <div class="h-screen flex items-center justify-center" style="background-color: #CC6844;">
     <div class="w-full md:max-w-lg p-6 bg-white border-gray-300 rounded-md shadow-md border lg:max-w-md">
-      <h1 class="text-3xl font-semibold text-center text-gray-900">SW Agricola</h1>
+      <h1 class="text-3xl font-semibold text-center text-gray-900 mb-10">SW Agricola</h1>
       <Vueform
         v-model="form"
         :endpoint="false"
@@ -43,13 +49,20 @@ const submitHandler = async () => {
           input-type="password"
           rules="required"
         />
-        <CheckboxElement name="remember" text="Recordarme" />
+        <div
+          v-if="errorLogin !== ''"
+          class="form-color-danger block form-text-small mt-5 text-center col-span-12"
+        >
+          {{ errorLogin }}
+        </div>
         <ButtonElement
           name="submit"
           :submits="true"
           button-label="Ingresar"
           :full="true"
           size="lg"
+          class="mt-5"
+          :loading="loading"
         />
       </Vueform>
       <p class="mt-8 font-medium text-center text-gray-700">
