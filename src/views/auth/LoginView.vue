@@ -28,47 +28,42 @@ const submitHandler = async () => {
 </script>
 
 <template>
-  <div class="h-screen flex items-center justify-center" style="background-color: #CC6844;">
-    <div class="w-full md:max-w-lg p-6 bg-white border-gray-300 rounded-md shadow-md border lg:max-w-md">
-      <h1 class="text-3xl font-semibold text-center text-gray-900 mb-10">SW Agricola</h1>
-      <Vueform
-        v-model="form"
-        :endpoint="false"
-        @submit="submitHandler"
-        :display-errors="false"
-      >
-        <TextElement
-          name="email"
-          label="Correo electrónico"
-          input-type="email"
-          rules="required|email"
-        />
-        <TextElement
-          name="password"
-          label="Contraseña"
-          input-type="password"
-          rules="required"
-        />
-        <div
-          v-if="errorLogin !== ''"
-          class="form-color-danger block form-text-small mt-5 text-center col-span-12"
-        >
-          {{ errorLogin }}
-        </div>
-        <ButtonElement
-          name="submit"
-          :submits="true"
-          button-label="Ingresar"
-          :full="true"
-          size="lg"
-          class="mt-5"
-          :loading="loading"
-        />
-      </Vueform>
-      <p class="mt-8 font-medium text-center text-gray-700">
-        <a href="#" class="hover:underline">Restablecer contraseña</a>
-      </p>
+  <h1 class="text-3xl font-semibold text-center text-gray-900 mb-10">SW Agricola</h1>
+  <Vueform
+    v-model="form"
+    :endpoint="false"
+    @submit="submitHandler"
+    :display-errors="false"
+  >
+    <TextElement
+      name="email"
+      label="Correo electrónico"
+      input-type="email"
+      rules="required|email"
+    />
+    <TextElement
+      name="password"
+      label="Contraseña"
+      input-type="password"
+      rules="required"
+    />
+    <div
+      v-if="errorLogin !== ''"
+      class="form-color-danger block form-text-small mt-5 text-center col-span-12"
+    >
+      {{ errorLogin }}
     </div>
-  </div>
-
+    <ButtonElement
+      name="submit"
+      :submits="true"
+      button-label="Ingresar"
+      :full="true"
+      size="lg"
+      class="mt-5"
+      :loading="loading"
+    />
+  </Vueform>
+  <p class="mt-8 font-medium text-center text-gray-700">
+    <a href="#" class="hover:underline">Restablecer contraseña</a>
+  </p>
 </template>

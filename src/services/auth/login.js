@@ -16,5 +16,8 @@ export const isValid = () => pb.authStore.isValid
 export const getToken = () => pb.authStore.token
 export const getAvatarUrlUser = (size) => {
   const { model } = pb.authStore
+  if (model === null) {
+    return ''
+  }
   return pb.files.getUrl(model, model.avatar, {'thumb': size})
 }

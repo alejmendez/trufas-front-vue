@@ -5,7 +5,6 @@ import { getCurrentUser, getAvatarUrlUser, Logout } from '@/services/auth/login'
 const root = ref(null)
 
 const user = getCurrentUser()
-console.log(user)
 const avatarUrl = getAvatarUrlUser('36x36')
 
 const showDropDown = ref(false)
@@ -56,7 +55,7 @@ onUnmounted(() => {
       tabindex="-1"
     >
       <div class="font-semibold text-left block px-4 py-2">
-        <div>{{ user.name }}</div>
+        <div>{{ user?.name }}</div>
       </div>
       <div class="py-1 text-left" role="none">
         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
