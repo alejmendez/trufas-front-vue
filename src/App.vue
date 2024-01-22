@@ -8,7 +8,7 @@ import layouts from '@/layouts'
 const layout = shallowRef('div')
 
 router.afterEach((to) => {
-  layout.value = layouts[to.meta.layout] || 'div'
+  layout.value = layouts[to.meta.layout] || layouts['AuthenticatedLayout']
 })
 
 provide('app:layout', layout)

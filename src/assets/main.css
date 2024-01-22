@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *, :before, :after, :root {
   --vf-primary: #212226;
   --vf-primary-darker: #09090A;
@@ -21,4 +20,12 @@
   --vf-gray-700: #374151;
   --vf-gray-800: #1f2937;
   --vf-gray-900: #111827;
+}
+
+
+
+@layer base {
+  .router-link-active {
+    background-color: #6b7280;
+  }
 }
