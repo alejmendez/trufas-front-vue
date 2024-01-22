@@ -29,3 +29,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+backend/pb_data
+backend/pocketbase.exe
