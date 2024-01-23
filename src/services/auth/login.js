@@ -1,23 +1,36 @@
-import { pb } from '@/utils/pocket_base'
+import axios from '@/libs/axios'
+import { useAuthStore } from '@/stores/auth'
 
-export const Login = async ({ email, password }) => {
-  await pb.collection('users').authWithPassword(email, password, {
-    expand: 'role'
-  });
+export const signIn = async ({ email, password }) => {
+  const response = await axios.post('auth/login', {
+    email,
+    password
+  })
+  const { data } = response
+  const store = useAuthStore()
+  store.signIn(data.user, {
+    token: data.access_token,
+    type: data.token_type,
+    expires_in: data.expires_in,
+  })
+
+  return data
 }
 
-export const Logout = () => {
-  pb.authStore.clear()
+export const signOut = () => {
+  const store = useAuthStore()
+  return store.signOut()
 }
 
-export const getAuth = () => pb.authStore
-export const getCurrentUser = () => pb.authStore.model
-export const isValid = () => pb.authStore.isValid
-export const getToken = () => pb.authStore.token
-export const getAvatarUrlUser = (size) => {
-  const { model } = pb.authStore
-  if (model === null) {
-    return ''
-  }
-  return pb.files.getUrl(model, model.avatar, {'thumb': size})
+export const getCurrentUser = () => {
+  const store = useAuthStore()
+  return store.user
+}
+export const isValid = () => {
+  const store = useAuthStore()
+  return store.isValid()
+}
+export const getAvatarUrlUser = () => {
+  const store = useAuthStore()
+  return store.user.avatar
 }

@@ -1,13 +1,30 @@
-import { pb } from '@/utils/pocket_base'
+import axios from '@/libs/axios'
 
-const list = async (order = '-created') => {
-  return await pb.collection('users').getList(1, 50, {
-    sort: order,
-    fields: 'id, dni, email, name, phone, role, expand.roles(role).name',
-    expand: 'roles(role)'
-  });
+const getList = async (order = '-created') => {
+  const response = await axios.get('user')
+  return response.data
+}
+
+const getOne = async (id) => {
+  return await axios.get(`user/${id}`)
+}
+
+const create = async (data) => {
+  return await axios.post('user', data)
+}
+
+const update = async (id, data) => {
+  return await axios.post(`user/${id}`, data)
+}
+
+const remove = async (id) => {
+  return await axios.delete(`user/${id}`)
 }
 
 export default {
-  list,
+  getList,
+  getOne,
+  create,
+  update,
+  remove,
 }

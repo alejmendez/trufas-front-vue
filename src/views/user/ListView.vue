@@ -1,62 +1,60 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
 
-import BreadCrumbs from '@/components/BreadCrumbs.vue'
+import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import UserService from '@/services/user'
 
-const breadCrumbs = [
-  {
-    to: 'user.list',
-    text: 'Usuarios'
+const tableData = reactive({
+  links: {},
+  meta: {
+    current_page: 1,
+    from: 1,
+    last_page: 1,
+    path: '',
+    per_page: 15,
+    to: 4,
+    total: 4
   },
-  {
-    text: 'Listado'
-  },
-]
+  data: [],
+})
 
-const tableData = reactive(
-  {
-    page: 1,
-    perPage: 50,
-    totalItems: 1,
-    totalPages: 1,
-    items: []
-  }
-)
+const roleColors = {
+  'Agricultor': 'border-gray-800 text-gray-800 bg-gray-200',
+  'Técnico': 'border-green-800 text-green-800 bg-green-200',
+  'Administrador': 'border-blue-800 text-blue-800 bg-blue-200',
+  'Super Admin': 'border-blue-800 text-blue-800 bg-blue-200',
+}
 
 onMounted(async () => {
-  const userList = await UserService.list()
-  tableData.page = userList.page
-  tableData.perPage = userList.perPage
-  tableData.totalItems = userList.totalItems
-  tableData.totalPages = userList.totalPages
-  tableData.items = userList.items
+  const userList = await UserService.getList()
+  tableData.links = userList.links
+  tableData.meta = userList.meta
+  tableData.data = userList.data
 })
 
 const orderHandler = () => {
 
 }
+
+const deleteHandler = async (id) => {
+  if (!confirm('¿Está seguro que desea eliminar el registro?')) {
+    return
+  }
+
+  try {
+    await UserService.remove(id)
+  } catch (error) {
+    alert('No se pudo eliminar el registro, intentelo luego')
+  }
+}
 </script>
 
 <template>
-  <header class="fi-header flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <BreadCrumbs :elements="breadCrumbs" />
-
-      <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
-        Usuarios
-      </h1>
-    </div>
-
-    <div class="fi-ac gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-[50px]">
-      <router-link
-        :to="{ name: 'user.create' }"
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 bg-gray-900 rounded-lg focus:shadow-outline hover:bg-gray-800"
-      >
-        Ingresar
-      </router-link>
-    </div>
-  </header>
+  <HeaderCrud
+    :breadcrumbs="[{ to: { name: 'user.list'}, text: 'Usuarios' }, { text: 'Listado' }]"
+    title="Usuarios"
+    :links="[{ to: { name: 'user.create' }, text: 'Ingresar' }]"
+  />
 
   <div class="mt-8 bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
     <!-- Table responsive wrapper -->
@@ -105,15 +103,18 @@ const orderHandler = () => {
           <tbody>
             <tr
               class="border-b dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600"
-              v-for="user of tableData.items"
+              v-for="user of tableData.data"
               :key="user.id"
             >
               <td class="px-6 py-3">{{ user.name }}</td>
               <td class="px-6 py-3">{{ user.dni }}</td>
               <td class="px-6 py-3">{{ user.phone }}</td>
               <td class="px-6 py-3">
-                <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                  {{ user.role }}
+                <span
+                  class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none border rounded-full"
+                  :class="roleColors[user.role.name]"
+                >
+                  {{ user.role.name }}
                 </span>
               </td>
               <td class="px-6 py-3">{{ user.email }}</td>
@@ -124,7 +125,11 @@ const orderHandler = () => {
                 <router-link :to="{ name: 'user.edit', params: { id: user.id } }">
                   <font-awesome-icon :icon="['fas', 'pencil']" class="mr-4 cursor-pointer transition-all hover:text-lime-600" />
                 </router-link>
-                <font-awesome-icon :icon="['fas', 'trash-can']" class="mr-4 cursor-pointer transition-all hover:text-red-600" />
+                <font-awesome-icon
+                  :icon="['fas', 'trash-can']"
+                  class="mr-4 cursor-pointer transition-all hover:text-red-600"
+                  @click="deleteHandler(user.id)"
+                />
               </td>
             </tr>
           </tbody>
@@ -135,7 +140,8 @@ const orderHandler = () => {
 
       <nav class="m-5 flex items-center justify-between text-sm">
         <p>
-          Mostrando <strong>1-5</strong> de <strong>10</strong>
+          Mostrando <strong>{{ tableData.meta.from }}-{{ tableData.meta.to }}</strong>
+          de <strong>{{ tableData.meta.total }}</strong>
         </p>
 
         <ul class="list-style-none flex">

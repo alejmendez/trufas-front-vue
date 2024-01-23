@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { getCurrentUser, getAvatarUrlUser, Logout } from '@/services/auth/login'
+import { useRouter } from 'vue-router'
+import { getCurrentUser, signOut } from '@/services/auth/login'
+
+const router = useRouter()
 
 const root = ref(null)
 
 const user = getCurrentUser()
-const avatarUrl = getAvatarUrlUser('36x36')
 
 const showDropDown = ref(false)
 
@@ -20,7 +22,10 @@ const closeDropDown = (e) => {
 }
 
 const signOutHandler = () => {
-  Logout()
+  signOut()
+  router.push({
+    name: 'auth.login',
+  })
 }
 
 onMounted(() => {
@@ -41,7 +46,7 @@ onUnmounted(() => {
     >
       <img
         class="w-10 h-10 rounded-full border-2 border-gray-50"
-        :src="avatarUrl"
+        :src="user.avatar"
         alt=""
       >
     </div>

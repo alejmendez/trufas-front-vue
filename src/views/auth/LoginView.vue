@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { Login } from '@/services/auth/login'
+import { signIn } from '@/services/auth/login'
 
 const router = useRouter()
 
@@ -14,7 +14,7 @@ const submitHandler = async () => {
   errorLogin.value = ''
   loading.value = true
   try {
-    await Login(form.value)
+    await signIn(form.value)
 
     router.push({
       name: 'dashboard',

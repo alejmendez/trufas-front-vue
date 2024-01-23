@@ -30,4 +30,4 @@ coverage
 
 *.tsbuildinfo
 backend/pb_data
-backend/pocketbase.exe
+backend/pocketbase*

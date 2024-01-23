@@ -31,8 +31,8 @@ const toggleSideBar = () => {
           <MenuUser />
         </div>
       </div>
-      <div class="h-[calc(100vh-64px)] bg-gray-50">
-        <main class="p-[10px] h-full">
+      <div class="min-h-[calc(100vh-64px)] bg-gray-50 pb-5">
+        <main class="py-[10px] px-[25px] h-full">
           <slot></slot>
         </main>
       </div>

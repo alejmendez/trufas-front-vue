@@ -1,8 +1,6 @@
 <script setup>
 const props = defineProps({
-  elements: {
-    type: Array
-  },
+  elements: Array,
 })
 </script>
 
@@ -15,7 +13,7 @@ const props = defineProps({
         :key="index"
       >
         <router-link
-          :to="{ name: ele.to }"
+          :to="ele.to"
           class="text-gray-600 hover:text-blue-500"
           v-if="ele.to"
         >
