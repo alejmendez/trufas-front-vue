@@ -1,7 +1,9 @@
 import axios from '@/libs/axios'
 
-const getList = async (order = '-created') => {
-  const response = await axios.get('user')
+const getList = async (params = {}) => {
+  const response = await axios.get('user', {
+    params
+  })
   return response.data
 }
 
