@@ -9,15 +9,21 @@ const router = useRouter()
 
 const avatarInput = ref(null)
 const form = ref(null)
+const form$ = ref(null)
 const formRole = ref(null)
+const formRole$ = ref(null)
 
 const loading = ref(false)
 
 const submitHandler = async () => {
-  console.log({
-    form: form.value,
-  })
-  // await form.value.validate()
+  await form$.value.validate()
+  await formRole$.value.validate()
+  const invalid = form$.value.invalid || formRole$.value.invalid
+
+  if (invalid) {
+    return
+  }
+
   loading.value = true
   try {
     const avatar = avatarInput.value.files[0]
@@ -63,10 +69,12 @@ const submitHandler = async () => {
     <div class="border-t border-gray-200 dark:border-white/10">
       <div class="p-6">
         <Vueform
+          ref="form$"
           v-model="form"
           :endpoint="false"
           @submit="submitHandler"
           :columns="{ container: 6, label: 12, wrapper: 12 }"
+          :display-errors="false"
         >
           <div class="form-text col-span-12 form-text-type">
             <input
@@ -123,10 +131,12 @@ const submitHandler = async () => {
     <div class="border-t border-gray-200 dark:border-white/10">
       <div class="p-6">
         <Vueform
+          ref="formRole$"
           v-model="formRole"
           :endpoint="false"
           @submit="submitHandler"
           :columns="{ container: 6, label: 12, wrapper: 12 }"
+          :display-errors="false"
         >
         <SelectElement
           name="role"
