@@ -50,10 +50,11 @@ export const useAuthStore = defineStore('auth', () => {
   function signIn(dataUser, dataJwt) {
     user.value = dataUser
     jwt.value = dataJwt
-    setLocalStorage(KEY_LOCALSTORAGE_USER, dataUser)
-    setLocalStorage(KEY_LOCALSTORAGE_JWT, dataJwt)
+    jwt.value.expires_at = new Date().getTime() + jwt.value.expires_in - 60
+    setLocalStorage(KEY_LOCALSTORAGE_USER, user.value)
+    setLocalStorage(KEY_LOCALSTORAGE_JWT, jwt.value)
 
-    axios.defaults.headers.common['Authorization'] = `${dataJwt.type} ${dataJwt.token}`;
+    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`;
   }
 
   function signOut() {
@@ -62,9 +63,21 @@ export const useAuthStore = defineStore('auth', () => {
     axios.defaults.headers.common['Authorization'] = '';
   }
 
+  function refresh(token, expires_in) {
+    jwt.value.token = token
+    jwt.value.expires_in = expires_in
+
+    let expires_at = new Date()
+    expires_at.setMinutes(expires_at.getMinutes() + (jwt.value.expires_in / 60) - 5)
+
+    jwt.value.expires_at = expires_at
+    setLocalStorage(KEY_LOCALSTORAGE_JWT, jwt.value)
+    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`;
+  }
+
   function isValid() {
     return jwt.value.token !== ''
   }
 
-  return { user, jwt, signIn, signOut, isValid }
+  return { user, jwt, signIn, signOut, refresh, isValid }
 })

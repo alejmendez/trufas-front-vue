@@ -18,9 +18,29 @@ export const signIn = async ({ email, password }) => {
 }
 
 export const signOut = () => {
+  clearInterval(refreshInterval)
   const store = useAuthStore()
   return store.signOut()
 }
+
+export const getRefreshToken = async () => {
+  const store = useAuthStore()
+
+  if (!store.isValid()) {
+    return
+  }
+
+  const response = await axios.post('auth/refresh')
+  const { data } = response
+
+  store.refresh(data.access_token, data.expires_in)
+
+  return data
+}
+
+let refreshTime = 1000 * 60 * 30
+let refreshInterval = setInterval(() => getRefreshToken(), refreshTime)
+setTimeout(() => getRefreshToken(), 5000)
 
 export const getCurrentUser = () => {
   const store = useAuthStore()

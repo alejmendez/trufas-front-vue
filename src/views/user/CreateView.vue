@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useToast } from "vue-toastification";
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import UserService from '@/services/user'
 
 const router = useRouter()
+const toast = useToast();
 
 const avatarInput = ref(null)
 const form = ref(null)
@@ -27,19 +29,23 @@ const submitHandler = async () => {
   loading.value = true
   try {
     const avatar = avatarInput.value.files[0]
-    const data = {
-      avatar,
-      ...form.value,
-      ...formRole.value,
-    }
-    console.log(data)
-    /* await UserService.create(data)
+    const formData = new FormData();
+    formData.append("avatar", avatar);
+    [
+      ...Object.entries(form.value),
+      ...Object.entries(formRole.value),
+    ].forEach(([key, value]) => formData.append(key, value))
+
+
+    await UserService.create(formData)
+    toast.success('Guardado satisfactoriamente')
 
     router.push({
       name: 'user.list',
-    }) */
+    })
   } catch (error) {
-    console.log(error)
+    const message = error?.response?.data?.message
+    toast.error(message ? message : 'Error al intentar guardar')
   } finally {
     loading.value = false
   }
@@ -117,6 +123,14 @@ const submitHandler = async () => {
             label="Teléfono"
             field-name="teléfono"
             rules="required|max:17"
+          />
+
+          <TextElement
+            name="password"
+            input-type="password"
+            label="Contraseña"
+            field-name="contraseña"
+            rules="required|min:6"
           />
         </Vueform>
       </div>

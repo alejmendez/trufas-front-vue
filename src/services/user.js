@@ -12,7 +12,11 @@ const getOne = async (id) => {
 }
 
 const create = async (data) => {
-  return await axios.post('user', data)
+  return await axios.post('user', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
 }
 
 const update = async (id, data) => {
