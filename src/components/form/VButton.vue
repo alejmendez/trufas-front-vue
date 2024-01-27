@@ -6,8 +6,8 @@ const attrs = useAttrs()
 const props = defineProps({
   disabled: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const emit = defineEmits(['click'])

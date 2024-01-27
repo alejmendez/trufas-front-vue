@@ -8,20 +8,20 @@ const attrs = useAttrs()
 const props = defineProps({
   classWrapper: {
     type: String,
-    default: '',
+    default: ''
   },
   type: {
     type: String,
-    default: 'text',
+    default: 'text'
   },
   label: {
     type: String,
-    default: '',
+    default: ''
   },
   disabled: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const emit = defineEmits(['click'])

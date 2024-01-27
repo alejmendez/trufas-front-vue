@@ -4,11 +4,11 @@ import { ref, reactive, onMounted } from 'vue'
 const props = defineProps({
   columns: Array,
   listHandler: {
-    type: Function,
+    type: Function
   },
   deleteHandler: {
-    type: Function,
-  },
+    type: Function
+  }
 })
 
 const order = reactive({
@@ -28,14 +28,14 @@ const data = reactive({
     to: 4,
     total: 4
   },
-  data: [],
+  data: []
 })
 
 const listData = async () => {
   const orderParams = `${order.order}${order.column}`
   const list = await props.listHandler({
     order: orderParams,
-    search: search.value,
+    search: search.value
   })
   data.links = list.links
   data.meta = list.meta
@@ -75,10 +75,11 @@ onMounted(listData)
 </script>
 
 <template>
-  <div class="mt-8 bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
+  <div
+    class="mt-8 bg-white shadow-sm ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10"
+  >
     <!-- Table responsive wrapper -->
     <div class="overflow-x-auto bg-white dark:bg-neutral-700">
-
       <!-- Search input -->
       <div class="flex justify-end px-4 py-3 sm:px-6">
         <div class="relative">
@@ -112,13 +113,15 @@ onMounted(listData)
               <font-awesome-icon
                 :icon="[
                   'fa',
-                  (order.column === column.data ? (order.order === '-' ? 'sort-up' : 'sort-down') : 'sort')
+                  order.column === column.data
+                    ? order.order === '-'
+                      ? 'sort-up'
+                      : 'sort-down'
+                    : 'sort'
                 ]"
               />
             </th>
-            <th scope="col" class="px-6 py-3">
-              Acciones
-            </th>
+            <th scope="col" class="px-6 py-3">Acciones</th>
           </tr>
         </thead>
 
@@ -129,52 +132,60 @@ onMounted(listData)
             v-for="item of data.data"
             :key="item.id"
           >
-            <slot
-              :item="item"
-              :deleteEvent="deleteHandler"
-            />
+            <slot :item="item" :deleteEvent="deleteHandler" />
           </tr>
         </tbody>
-
       </table>
 
       <nav class="m-5 flex items-center justify-between text-sm">
         <p>
-          Mostrando <strong>{{ data.meta.from }}-{{ data.meta.to }}</strong>
-          de <strong>{{ data.meta.total }}</strong>
+          Mostrando <strong>{{ data.meta.from }}-{{ data.meta.to }}</strong> de
+          <strong>{{ data.meta.total }}</strong>
         </p>
 
         <ul class="list-style-none flex">
           <li>
-            <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!">
+            <a
+              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+              href="#!"
+            >
               <font-awesome-icon :icon="['fa', 'chevron-left']" />
             </a>
           </li>
           <li>
-            <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!">
+            <a
+              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+              href="#!"
+            >
               1
             </a>
           </li>
           <li aria-current="page">
-            <a class="relative block rounded bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700 transition-all duration-300"
-              href="#!">
+            <a
+              class="relative block rounded bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700 transition-all duration-300"
+              href="#!"
+            >
               2
-              <span class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]">
+              <span
+                class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
+              >
                 (current)
               </span>
             </a>
           </li>
           <li>
-            <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!">
+            <a
+              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+              href="#!"
+            >
               3
             </a>
           </li>
           <li>
-            <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!">
+            <a
+              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+              href="#!"
+            >
               <font-awesome-icon :icon="['fa', 'chevron-right']" />
             </a>
           </li>

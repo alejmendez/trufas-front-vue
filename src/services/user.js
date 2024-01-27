@@ -32,5 +32,5 @@ export default {
   getOne,
   create,
   update,
-  remove,
+  remove
 }

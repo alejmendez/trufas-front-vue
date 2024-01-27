@@ -23,28 +23,30 @@ const delLocalStorage = (key) => {
   localStorage.removeItem(key)
 }
 
-const initRefUser = () => (
-  ref(getLocalStorage(KEY_LOCALSTORAGE_USER, {
-    name: '',
-    email: '',
-    avatar: '',
-  }))
-)
+const initRefUser = () =>
+  ref(
+    getLocalStorage(KEY_LOCALSTORAGE_USER, {
+      name: '',
+      email: '',
+      avatar: ''
+    })
+  )
 
-const initRefJwt = () => (
-  ref(getLocalStorage(KEY_LOCALSTORAGE_JWT, {
-    token: '',
-    token_type: '',
-    expires_in: '',
-  }))
-)
+const initRefJwt = () =>
+  ref(
+    getLocalStorage(KEY_LOCALSTORAGE_JWT, {
+      token: '',
+      token_type: '',
+      expires_in: ''
+    })
+  )
 
 export const useAuthStore = defineStore('auth', () => {
   const user = initRefUser()
   const jwt = initRefJwt()
 
   if (jwt.value.token) {
-    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`;
+    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`
   }
 
   function signIn(dataUser, dataJwt) {
@@ -54,13 +56,13 @@ export const useAuthStore = defineStore('auth', () => {
     setLocalStorage(KEY_LOCALSTORAGE_USER, user.value)
     setLocalStorage(KEY_LOCALSTORAGE_JWT, jwt.value)
 
-    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`;
+    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`
   }
 
   function signOut() {
     delLocalStorage(KEY_LOCALSTORAGE_USER)
     delLocalStorage(KEY_LOCALSTORAGE_JWT)
-    axios.defaults.headers.common['Authorization'] = '';
+    axios.defaults.headers.common['Authorization'] = ''
   }
 
   function refresh(token, expires_in) {
@@ -68,11 +70,11 @@ export const useAuthStore = defineStore('auth', () => {
     jwt.value.expires_in = expires_in
 
     let expires_at = new Date()
-    expires_at.setMinutes(expires_at.getMinutes() + (jwt.value.expires_in / 60) - 5)
+    expires_at.setMinutes(expires_at.getMinutes() + jwt.value.expires_in / 60 - 5)
 
     jwt.value.expires_at = expires_at
     setLocalStorage(KEY_LOCALSTORAGE_JWT, jwt.value)
-    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`;
+    axios.defaults.headers.common['Authorization'] = `${jwt.value.type} ${jwt.value.token}`
   }
 
   function isValid() {

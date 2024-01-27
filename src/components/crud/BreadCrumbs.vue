@@ -1,22 +1,14 @@
 <script setup>
 const props = defineProps({
-  elements: Array,
+  elements: Array
 })
 </script>
 
 <template>
   <div class="breadcrumbs py-4 flex items-center flex-wrap text-gray-500 text-sm font-medium">
     <ul class="flex items-center">
-      <li
-        class="inline-flex items-center"
-        v-for="(ele, index) in props.elements"
-        :key="index"
-      >
-        <router-link
-          :to="ele.to"
-          class="text-gray-600 hover:text-blue-500"
-          v-if="ele.to"
-        >
+      <li class="inline-flex items-center" v-for="(ele, index) in props.elements" :key="index">
+        <router-link :to="ele.to" class="text-gray-600 hover:text-blue-500" v-if="ele.to">
           {{ ele.text }}
         </router-link>
         <div v-else class="text-gray-600 hover:text-blue-500">

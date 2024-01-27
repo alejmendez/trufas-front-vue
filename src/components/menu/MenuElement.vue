@@ -8,7 +8,7 @@ const props = defineProps({
   icon: {
     type: String,
     default: 'fa-solid fa-circle'
-  },
+  }
 })
 </script>
 

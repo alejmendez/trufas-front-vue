@@ -13,7 +13,7 @@ import {
   faMagnifyingGlass,
   faEye,
   faPencil,
-  faTrashCan,
+  faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
 
 const icons = [
@@ -29,11 +29,11 @@ const icons = [
   faMagnifyingGlass,
   faEye,
   faPencil,
-  faTrashCan,
+  faTrashCan
 ]
 
-export const initFontAwesome = app => {
-  icons.map(i => library.add(i))
+export const initFontAwesome = (app) => {
+  icons.map((i) => library.add(i))
 
   app.component('FontAwesomeIcon', FontAwesomeIcon)
 }

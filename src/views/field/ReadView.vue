@@ -1,6 +1,3 @@
-<script setup>
-</script>
+<script setup></script>
 
-<template>
-  edit!
-</template>
+<template>edit!</template>

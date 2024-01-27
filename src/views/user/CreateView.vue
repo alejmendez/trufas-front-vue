@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import UserService from '@/services/user'
 
 const router = useRouter()
-const toast = useToast();
+const toast = useToast()
 
 const avatarInput = ref(null)
 const form = ref(null)
@@ -18,30 +18,29 @@ const formRole$ = ref(null)
 const loading = ref(false)
 
 const submitHandler = async () => {
-  await form$.value.validate()
-  await formRole$.value.validate()
-  const invalid = form$.value.invalid || formRole$.value.invalid
-
-  if (invalid) {
-    return
-  }
-
-  loading.value = true
   try {
-    const avatar = avatarInput.value.files[0]
-    const formData = new FormData();
-    formData.append("avatar", avatar);
-    [
-      ...Object.entries(form.value),
-      ...Object.entries(formRole.value),
-    ].forEach(([key, value]) => formData.append(key, value))
+    await form$.value.validate()
+    await formRole$.value.validate()
+    const invalid = form$.value.invalid || formRole$.value.invalid
 
+    if (invalid) {
+      return
+    }
+
+    loading.value = true
+
+    const avatar = avatarInput.value.files[0]
+    const formData = new FormData()
+    formData.append('avatar', avatar)
+    ;[...Object.entries(form.value), ...Object.entries(formRole.value)].forEach(([key, value]) =>
+      formData.append(key, value)
+    )
 
     await UserService.create(formData)
     toast.success('Guardado satisfactoriamente')
 
     router.push({
-      name: 'user.list',
+      name: 'user.list'
     })
   } catch (error) {
     const message = error?.response?.data?.message
@@ -54,7 +53,7 @@ const submitHandler = async () => {
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'user.list'}, text: 'Usuarios' }, { text: 'Crear' }]"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: 'Crear' }]"
     title="Crear Usuario"
   >
     <template v-slot:header>
@@ -66,7 +65,9 @@ const submitHandler = async () => {
       </button>
     </template>
   </HeaderCrud>
-  <section class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
+  <section
+    class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
+  >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
         Detalles del perfil
@@ -90,19 +91,9 @@ const submitHandler = async () => {
             />
           </div>
 
-          <TextElement
-            name="dni"
-            label="RUT / ID"
-            field-name="rut"
-            rules="required|max:255"
-          />
+          <TextElement name="dni" label="RUT / ID" field-name="rut" rules="required|max:255" />
 
-          <TextElement
-            name="name"
-            label="Nombre"
-            field-name="nombre"
-            rules="required|max:255"
-          />
+          <TextElement name="name" label="Nombre" field-name="nombre" rules="required|max:255" />
 
           <TextElement
             name="last_name"
@@ -136,11 +127,11 @@ const submitHandler = async () => {
       </div>
     </div>
   </section>
-  <section class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10">
+  <section
+    class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
+  >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
-      <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        Permisos
-      </h3>
+      <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">Permisos</h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
       <div class="p-6">
@@ -152,20 +143,15 @@ const submitHandler = async () => {
           :columns="{ container: 6, label: 12, wrapper: 12 }"
           :display-errors="false"
         >
-        <SelectElement
-          name="role"
-          :search="true"
-          :native="false"
-          input-type="search"
-          autocomplete="disabled"
-          label="Tipo de usuario"
-          :items="[
-            'Super Admin',
-            'Administrador',
-            'Técnico',
-            'Agricultor'
-          ]"
-        />
+          <SelectElement
+            name="role"
+            :search="true"
+            :native="false"
+            input-type="search"
+            autocomplete="disabled"
+            label="Tipo de usuario"
+            :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
+          />
         </Vueform>
       </div>
     </div>

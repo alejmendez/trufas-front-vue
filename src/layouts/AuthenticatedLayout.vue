@@ -12,7 +12,9 @@ const toggleSideBar = () => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white">
+  <div
+    class="w-screen h-screen flex bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white"
+  >
     <div class="w-[320px] h-full" v-show="showSide">
       <div class="flex justify-start items-center h-[64px] border-b">
         <div class="px-[20px]">
@@ -23,7 +25,10 @@ const toggleSideBar = () => {
     </div>
     <div class="w-full h-full">
       <div class="flex items-center w-full h-[64px] border-b px-[20px] py-[10px] z-10">
-        <div class="cursor-pointer rounded-lg outline-none transition duration-75 text-gray-400 hover:text-gray-500 focus-visible:ring-primary-600 border border-gray-400 rounded px-3 py-1" @click="toggleSideBar">
+        <div
+          class="cursor-pointer rounded-lg outline-none transition duration-75 text-gray-400 hover:text-gray-500 focus-visible:ring-primary-600 border border-gray-400 rounded px-3 py-1"
+          @click="toggleSideBar"
+        >
           <FontAwesomeIcon icon="fa-solid fa-bars" />
         </div>
 

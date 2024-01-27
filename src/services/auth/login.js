@@ -11,7 +11,7 @@ export const signIn = async ({ email, password }) => {
   store.signIn(data.user, {
     token: data.access_token,
     type: data.token_type,
-    expires_in: data.expires_in,
+    expires_in: data.expires_in
   })
 
   return data

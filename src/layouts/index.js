@@ -3,5 +3,5 @@ import AuthLayout from './AuthLayout.vue'
 
 export default {
   AuthenticatedLayout,
-  AuthLayout,
+  AuthLayout
 }

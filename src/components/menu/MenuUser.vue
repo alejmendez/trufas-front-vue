@@ -24,7 +24,7 @@ const closeDropDown = (e) => {
 const signOutHandler = () => {
   signOut()
   router.push({
-    name: 'auth.login',
+    name: 'auth.login'
   })
 }
 
@@ -40,15 +40,8 @@ onUnmounted(() => {
 <template>
   <div class="w-[40px]" ref="root">
     <!-- User login -->
-    <div
-      class="flex items-center justify-start space-x-4"
-      @click="toggleDrop"
-    >
-      <img
-        class="w-10 h-10 rounded-full border-2 border-gray-50"
-        :src="user.avatar"
-        alt=""
-      >
+    <div class="flex items-center justify-start space-x-4" @click="toggleDrop">
+      <img class="w-10 h-10 rounded-full border-2 border-gray-50" :src="user.avatar" alt="" />
     </div>
     <!-- Drop down -->
     <div

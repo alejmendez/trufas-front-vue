@@ -1,5 +1,5 @@
 import { createPinia } from 'pinia'
 
-export const initPinia = app => {
+export const initPinia = (app) => {
   app.use(createPinia())
 }

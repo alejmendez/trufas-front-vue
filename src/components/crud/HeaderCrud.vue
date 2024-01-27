@@ -16,7 +16,9 @@ const props = defineProps({
     <div>
       <BreadCrumbs :elements="props.breadcrumbs" />
 
-      <h1 class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
+      <h1
+        class="fi-header-heading text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl"
+      >
         {{ props.title }}
       </h1>
     </div>

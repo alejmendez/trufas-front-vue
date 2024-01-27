@@ -1,10 +1,10 @@
-import Toast from 'vue-toastification';
+import Toast from 'vue-toastification'
 // Import the CSS or use your own!
-import 'vue-toastification/dist/index.css';
+import 'vue-toastification/dist/index.css'
 
-export const initToast = app => {
+export const initToast = (app) => {
   app.use(Toast, {
-    position: "top-right",
+    position: 'top-right',
     timeout: 5000,
     closeOnClick: true,
     pauseOnFocusLoss: true,
@@ -13,8 +13,8 @@ export const initToast = app => {
     draggablePercent: 0.6,
     showCloseButtonOnHover: false,
     hideProgressBar: false,
-    closeButton: "button",
+    closeButton: 'button',
     icon: true,
-    rtl: false,
+    rtl: false
   })
 }

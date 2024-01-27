@@ -8,21 +8,21 @@ const columns = [
   { text: 'RUT / ID', data: 'dni' },
   { text: 'Teléfono', data: 'phone' },
   { text: 'Tipo de usuario', data: 'role' },
-  { text: 'Correo', data: 'email' },
+  { text: 'Correo', data: 'email' }
 ]
 
 const roleColors = {
-  'Agricultor': 'border-gray-800 text-gray-800 bg-gray-200',
-  'Técnico': 'border-green-800 text-green-800 bg-green-200',
-  'Administrador': 'border-blue-800 text-blue-800 bg-blue-200',
-  'Super Admin': 'border-blue-800 text-blue-800 bg-blue-200',
+  Agricultor: 'border-gray-800 text-gray-800 bg-gray-200',
+  Técnico: 'border-green-800 text-green-800 bg-green-200',
+  Administrador: 'border-blue-800 text-blue-800 bg-blue-200',
+  'Super Admin': 'border-blue-800 text-blue-800 bg-blue-200'
 }
 </script>
 
 <template>
   <HeaderCrud
     title="Usuarios"
-    :breadcrumbs="[{ to: { name: 'user.list'}, text: 'Usuarios' }, { text: 'Listado' }]"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: 'Listado' }]"
     :links="[{ to: { name: 'user.create' }, text: 'Ingresar' }]"
   />
 
@@ -46,10 +46,16 @@ const roleColors = {
     <td class="px-6 py-3">{{ table.item.email }}</td>
     <td class="px-6 py-3">
       <router-link :to="{ name: 'user.view', params: { id: table.item.id } }">
-        <font-awesome-icon :icon="['fas', 'eye']" class="mr-4 cursor-pointer transition-all hover:text-gray-600" />
+        <font-awesome-icon
+          :icon="['fas', 'eye']"
+          class="mr-4 cursor-pointer transition-all hover:text-gray-600"
+        />
       </router-link>
       <router-link :to="{ name: 'user.edit', params: { id: table.item.id } }">
-        <font-awesome-icon :icon="['fas', 'pencil']" class="mr-4 cursor-pointer transition-all hover:text-lime-600" />
+        <font-awesome-icon
+          :icon="['fas', 'pencil']"
+          class="mr-4 cursor-pointer transition-all hover:text-lime-600"
+        />
       </router-link>
       <font-awesome-icon
         :icon="['fas', 'trash-can']"

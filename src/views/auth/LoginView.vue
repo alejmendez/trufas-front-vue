@@ -17,7 +17,7 @@ const submitHandler = async () => {
     await signIn(form.value)
 
     router.push({
-      name: 'dashboard',
+      name: 'dashboard'
     })
   } catch (error) {
     errorLogin.value = 'Correo electrónico o Contraseña incorrectos, intentelo nuevamente.'
@@ -29,24 +29,14 @@ const submitHandler = async () => {
 
 <template>
   <h1 class="text-3xl font-semibold text-center text-gray-900 mb-10">SW Agricola</h1>
-  <Vueform
-    v-model="form"
-    :endpoint="false"
-    @submit="submitHandler"
-    :display-errors="false"
-  >
+  <Vueform v-model="form" :endpoint="false" @submit="submitHandler" :display-errors="false">
     <TextElement
       name="email"
       label="Correo electrónico"
       input-type="email"
       rules="required|email"
     />
-    <TextElement
-      name="password"
-      label="Contraseña"
-      input-type="password"
-      rules="required"
-    />
+    <TextElement name="password" label="Contraseña" input-type="password" rules="required" />
     <div
       v-if="errorLogin !== ''"
       class="form-color-danger block form-text-small mt-5 text-center col-span-12"
