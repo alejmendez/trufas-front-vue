@@ -1,5 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useToast } from 'vue-toastification'
+import Swal from 'sweetalert2'
 
 const props = defineProps({
   columns: Array,
@@ -11,10 +13,12 @@ const props = defineProps({
   }
 })
 
+const toast = useToast()
 const order = reactive({
   column: '',
   order: ''
 })
+const loading = ref(false)
 const search = ref('')
 
 const data = reactive({
@@ -32,14 +36,21 @@ const data = reactive({
 })
 
 const listData = async () => {
-  const orderParams = `${order.order}${order.column}`
-  const list = await props.listHandler({
-    order: orderParams,
-    search: search.value
-  })
-  data.links = list.links
-  data.meta = list.meta
-  data.data = list.data
+  try {
+    loading.value = true
+    const orderParams = `${order.order}${order.column}`
+    const list = await props.listHandler({
+      order: orderParams,
+      search: search.value
+    })
+    data.links = list.links
+    data.meta = list.meta
+    data.data = list.data
+  } catch (error) {
+    toast.error('Error al buscar informacion')
+  } finally {
+    loading.value = false
+  }
 }
 
 const orderHandler = (field) => {
@@ -59,15 +70,25 @@ const searchHandler = (e) => {
 }
 
 const deleteHandler = async (id) => {
-  if (!confirm('¿Está seguro que desea eliminar el registro?')) {
-    return
-  }
-
   try {
+    const result = await Swal.fire({
+      title: "¿Está seguro que desea eliminar el registro?",
+      showDenyButton: true,
+      confirmButtonText: "Aceptar",
+      denyButtonText: 'Cancelar'
+    })
+
+    if (!result.isConfirmed) {
+      return
+    }
+
     await props.deleteHandler(id)
     listData()
   } catch (error) {
-    alert('No se pudo eliminar el registro, intentelo luego')
+    Swal.fire({
+      icon: "error",
+      text: "No se pudo eliminar el registro, intentelo luego",
+    });
   }
 }
 
@@ -127,13 +148,28 @@ onMounted(listData)
 
         <!-- Table body -->
         <tbody>
-          <tr
-            class="border-b dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600"
-            v-for="item of data.data"
-            :key="item.id"
-          >
-            <slot :item="item" :deleteEvent="deleteHandler" />
-          </tr>
+          <template v-if="loading && !data.data.length">
+            <tr
+              class="border-b dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600 animate-pulse "
+            >
+              <td
+                v-for="index in (props.columns.length + 1)"
+                :key="index"
+                class="px-6 py-3"
+              >
+                <div class="h-2 bg-slate-700 rounded"></div>
+              </td>
+            </tr>
+          </template>
+          <template v-else>
+            <tr
+              class="border-b dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600"
+              v-for="item of data.data"
+              :key="item.id"
+            >
+              <slot :item="item" :deleteEvent="deleteHandler" />
+            </tr>
+          </template>
         </tbody>
       </table>
 
