@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-
+import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
@@ -10,6 +10,7 @@ import UserService from '@/services/user'
 const router = useRouter()
 const route = useRoute()
 const toast = useToast()
+const { t } = useI18n()
 
 const id = route.params.id;
 
@@ -49,14 +50,14 @@ const submitHandler = async () => {
     )
 
     await UserService.create(formData)
-    toast.success('Guardado satisfactoriamente')
+    toast.success(t('generics.messages.saved_successfully'))
 
     router.push({
       name: 'user.list'
     })
   } catch (error) {
     const message = error?.response?.data?.message
-    toast.error(message ? message : 'Error al intentar guardar')
+    toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
     loading.value = false
   }
@@ -65,21 +66,21 @@ const submitHandler = async () => {
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: 'Crear' }]"
-    title="Crear Usuario"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: t('generics.actions.edit') }]"
+    :title="t('user.titles.edit')"
   >
     <template v-slot:header>
       <button
         class="px-5 py-2 text-gray-100 transition-colors duration-150 bg-gray-900 rounded-lg focus:shadow-outline hover:bg-gray-800"
         @click="submitHandler"
       >
-        Guardar Cambios
+        {{ t('generics.buttons.save_edit') }}
       </button>
       <router-link
         :to="{ name: 'user.list'}"
         class="px-5 py-2 text-gray-100 transition-colors duration-150 rounded-lg focus:shadow-outline bg-white text-gray-950 hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 ring-1 ring-gray-950/10 dark:ring-white/20"
       >
-        Cancelar
+        {{ t('generics.buttons.cancel') }}
       </router-link>
     </template>
   </HeaderCrud>
@@ -88,7 +89,7 @@ const submitHandler = async () => {
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        Detalles del perfil
+        {{ t('user.sections.details') }}
       </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
@@ -109,36 +110,46 @@ const submitHandler = async () => {
             />
           </div>
 
-          <TextElement name="dni" label="RUT / ID" field-name="rut" rules="required|max:255" />
+          <TextElement
+            name="dni"
+            :label="t('user.form.dni.label')"
+            :field-name="t('user.form.dni.name')"
+            rules="required|max:255"
+          />
 
-          <TextElement name="name" label="Nombre" field-name="nombre" rules="required|max:255" />
+          <TextElement
+            name="name"
+            :label="t('user.form.name.label')"
+            :field-name="t('user.form.name.name')"
+            rules="required|max:255"
+          />
 
           <TextElement
             name="last_name"
-            label="Apellido"
-            field-name="apellido"
+            :label="t('user.form.last_name.label')"
+            :field-name="t('user.form.last_name.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="email"
-            label="Correo electrónico"
-            field-name="correo electrónico"
+            :label="t('user.form.email.label')"
+            :field-name="t('user.form.email.name')"
             rules="required|email|max:255"
           />
 
           <TextElement
             name="phone"
-            label="Teléfono"
-            field-name="teléfono"
+            :label="t('user.form.phone.label')"
+            :field-name="t('user.form.phone.name')"
             rules="required|max:17"
           />
 
           <TextElement
             name="password"
             input-type="password"
-            label="Contraseña"
-            field-name="contraseña"
+            :label="t('user.form.password.label')"
+            :field-name="t('user.form.password.name')"
             rules="required|min:6"
           />
         </Vueform>
@@ -149,7 +160,9 @@ const submitHandler = async () => {
     class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
-      <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">Permisos</h3>
+      <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
+        {{ t('user.sections.roles') }}
+      </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
       <div class="p-6">
@@ -167,7 +180,8 @@ const submitHandler = async () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            label="Tipo de usuario"
+            :label="t('user.form.role.label')"
+            :field-name="t('user.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
           />
         </Vueform>

@@ -2,6 +2,23 @@
   "brand": {
     "name": "SW Agricola"
   },
+  "generics": {
+    "messages": {
+      "saved_successfully": "Guardado satisfactoriamente"
+    },
+    "errors": {
+      "trying_to_save": "Error al intentar guardar"
+    },
+    "buttons": {
+      "create": "Crear",
+      "save_edit": "Guardar Cambios",
+      "cancel": "Cancelar"
+    },
+    "actions": {
+      "create": "Crear",
+      "edit": "Editar"
+    }
+  },
   "login": {
     "form": {
       "email": "Correo electrónico",
@@ -13,6 +30,50 @@
     },
     "errors": {
       "unauthorized": "Correo electrónico o Contraseña incorrectos, intentelo nuevamente."
+    }
+  },
+  "user": {
+    "titles": {
+      "create": "Crear Usuario",
+      "edit": "Editar Usuario"
+    },
+    "form": {
+      "name": {
+        "label": "Nombre",
+        "name": "nombre"
+      },
+      "last_name": {
+        "label": "Apellidos",
+        "name": "apellidos"
+      },
+      "email": {
+        "label": "Correo electrónico",
+        "name": "correo electrónico"
+      },
+      "password": {
+        "label": "Contraseña",
+        "name": "contraseña"
+      },
+      "dni": {
+        "label": "RUT / ID",
+        "name": "rut"
+      },
+      "avatar": {
+        "label": "Seleccione un imagen",
+        "name": "seleccione un imagen"
+      },
+      "phone": {
+        "label": "Teléfono",
+        "name": "teléfono"
+      },
+      "role": {
+        "label": "Tipo de usuario",
+        "name": "tipo de usuario"
+      }
+    },
+    "sections": {
+      "details": "Detalles del perfil",
+      "roles": "Permisos"
     }
   }
 }
