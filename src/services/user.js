@@ -8,7 +8,8 @@ const getList = async (params = {}) => {
 }
 
 const getOne = async (id) => {
-  return await axios.get(`user/${id}`)
+  const response = await axios.get(`user/${id}`)
+  return response.data.data
 }
 
 const create = async (data) => {
