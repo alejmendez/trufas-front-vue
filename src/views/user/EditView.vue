@@ -23,11 +23,18 @@ const formRole$ = ref(null)
 const loading = ref(false)
 
 onMounted(async() => {
-  const user = await UserService.getOne(id)
-  form$.value.load(user)
-  formRole$.value.load({
-    role: user.role.name
-  })
+  try {
+    const user = await UserService.getOne(id)
+    form$.value.load(user)
+    formRole$.value.load({
+      role: user.role.name
+    })
+  } catch (error) {
+    toast.warning(t('generics.messages.entity_not_found'))
+    router.push({
+      name: 'user.list'
+    })
+  }
 })
 
 const submitHandler = async () => {

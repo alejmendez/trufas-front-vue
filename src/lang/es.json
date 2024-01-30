@@ -4,7 +4,8 @@
   },
   "generics": {
     "messages": {
-      "saved_successfully": "Guardado satisfactoriamente"
+      "saved_successfully": "Guardado satisfactoriamente",
+      "entity_not_found": "Registro no encontrado, intente nuevamente"
     },
     "errors": {
       "trying_to_save": "Error al intentar guardar"
