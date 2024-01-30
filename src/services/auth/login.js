@@ -23,6 +23,16 @@ export const signOut = () => {
   return store.signOut()
 }
 
+export const statusToken = () => {
+  const store = useAuthStore()
+
+  if (!store.isValid()) {
+    return
+  }
+
+  axios.get('auth/me')
+}
+
 export const getRefreshToken = async () => {
   const store = useAuthStore()
 
@@ -40,7 +50,7 @@ export const getRefreshToken = async () => {
 
 let refreshTime = 1000 * 60 * 30
 let refreshInterval = setInterval(() => getRefreshToken(), refreshTime)
-setTimeout(() => getRefreshToken(), 5000)
+setTimeout(statusToken, 10)
 
 export const getCurrentUser = () => {
   const store = useAuthStore()

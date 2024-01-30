@@ -33,7 +33,11 @@ const submitHandler = async () => {
 
     const avatar = avatarInput.value.files[0]
     const formData = new FormData()
-    formData.append('avatar', avatar)
+
+    if (avatar) {
+      formData.append('avatar', avatar)
+    }
+
     ;[...Object.entries(form.value), ...Object.entries(formRole.value)].forEach(([key, value]) =>
       formData.append(key, value)
     )

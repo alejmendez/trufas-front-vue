@@ -19,6 +19,10 @@ const form = ref(null)
 const form$ = ref(null)
 const formRole = ref(null)
 const formRole$ = ref(null)
+const formLoginEmail = ref(null)
+const formLoginEmail$ = ref(null)
+const formLoginPassword = ref(null)
+const formLoginPassword$ = ref(null)
 
 const loading = ref(false)
 
@@ -28,6 +32,9 @@ onMounted(async() => {
     form$.value.load(user)
     formRole$.value.load({
       role: user.role.name
+    })
+    formLoginEmail$.value.load({
+      email: user.email
     })
   } catch (error) {
     toast.warning(t('generics.messages.entity_not_found'))
@@ -51,12 +58,51 @@ const submitHandler = async () => {
 
     const avatar = avatarInput.value.files[0]
     const formData = new FormData()
-    formData.append('avatar', avatar)
+    if (avatar) {
+      formData.append('avatar', avatar)
+    }
+
     ;[...Object.entries(form.value), ...Object.entries(formRole.value)].forEach(([key, value]) =>
       formData.append(key, value)
     )
 
-    await UserService.create(formData)
+    await UserService.update(id, formData)
+    toast.success(t('generics.messages.saved_successfully'))
+
+    router.push({
+      name: 'user.list'
+    })
+  } catch (error) {
+    const message = error?.response?.data?.message
+    toast.error(message ? message : t('generics.errors.trying_to_save'))
+  } finally {
+    loading.value = false
+  }
+}
+
+const submitEmailHandler = async () => {
+  try {
+    loading.value = true
+
+    await UserService.updateEmail(id, formLoginEmail.value.email)
+    toast.success(t('generics.messages.saved_successfully'))
+
+    router.push({
+      name: 'user.list'
+    })
+  } catch (error) {
+    const message = error?.response?.data?.message
+    toast.error(message ? message : t('generics.errors.trying_to_save'))
+  } finally {
+    loading.value = false
+  }
+}
+
+const submitPasswordHandler = async () => {
+  try {
+    loading.value = true
+
+    await UserService.updatePassword(id, formLoginPassword.value.password)
     toast.success(t('generics.messages.saved_successfully'))
 
     router.push({
@@ -139,19 +185,58 @@ const submitHandler = async () => {
           />
 
           <TextElement
+            name="phone"
+            :label="t('user.form.phone.label')"
+            :field-name="t('user.form.phone.name')"
+            rules="required|max:17"
+          />
+        </Vueform>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
+  >
+    <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
+      <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
+        {{ t('user.sections.login') }}
+      </h3>
+    </header>
+    <div class="border-t border-gray-200 dark:border-white/10">
+      <div class="p-6">
+        <Vueform
+          ref="formLoginEmail$"
+          v-model="formLoginEmail"
+          :endpoint="false"
+          @submit="submitHandler"
+          :columns="{ container: 6, label: 12, wrapper: 12 }"
+          :display-errors="false"
+        >
+          <TextElement
             name="email"
             :label="t('user.form.email.label')"
             :field-name="t('user.form.email.name')"
             rules="required|email|max:255"
           />
 
-          <TextElement
-            name="phone"
-            :label="t('user.form.phone.label')"
-            :field-name="t('user.form.phone.name')"
-            rules="required|max:17"
-          />
-
+          <div class="form-text col-span-6 form-text-type">
+            <button
+              class="float-right mt-8 px-5 py-2 border-2 border-gray-400 text-gray-700 transition-colors duration-150 bg-white rounded-lg focus:shadow-outline hover:bg-gray-200"
+              @click="submitEmailHandler"
+            >
+              {{ t('user.buttons.change_e_mail') }}
+            </button>
+          </div>
+        </Vueform>
+        <Vueform
+          ref="formLoginPassword$"
+          v-model="formLoginPassword"
+          :endpoint="false"
+          @submit="submitHandler"
+          :columns="{ container: 6, label: 12, wrapper: 12 }"
+          :display-errors="false"
+        >
           <TextElement
             name="password"
             input-type="password"
@@ -159,10 +244,19 @@ const submitHandler = async () => {
             :field-name="t('user.form.password.name')"
             rules="required|min:6"
           />
+          <div class="form-text col-span-6 form-text-type">
+            <button
+              class="float-right mt-8 px-5 py-2 border-2 border-gray-400 text-gray-700 transition-colors duration-150 bg-white rounded-lg focus:shadow-outline hover:bg-gray-200"
+              @click="submitPasswordHandler"
+            >
+              {{ t('user.buttons.resend_password') }}
+            </button>
+          </div>
         </Vueform>
       </div>
     </div>
   </section>
+
   <section
     class="mt-5 rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10"
   >

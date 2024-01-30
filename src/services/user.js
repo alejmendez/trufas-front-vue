@@ -21,7 +21,31 @@ const create = async (data) => {
 }
 
 const update = async (id, data) => {
-  return await axios.post(`user/${id}`, data)
+  return await axios.patch(`user/${id}`,
+    {
+      "_method": "PATCH",
+      ...data
+    },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  )
+}
+
+const updateEmail = async (id, email) => {
+  return await axios.patch(`user/${id}`, {
+    "_method": "PATCH",
+    email,
+  })
+}
+
+const updatePassword = async (id, password) => {
+  return await axios.patch(`user/${id}`, {
+    "_method": "PATCH",
+    password,
+  })
 }
 
 const remove = async (id) => {
@@ -33,5 +57,7 @@ export default {
   getOne,
   create,
   update,
+  updateEmail,
+  updatePassword,
   remove
 }

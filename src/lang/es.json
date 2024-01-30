@@ -74,7 +74,12 @@
     },
     "sections": {
       "details": "Detalles del perfil",
+      "login": "Inicio de sesión",
       "roles": "Permisos"
+    },
+    "buttons": {
+      "change_e_mail": "Cambiar correo",
+      "resend_password": "Reenvía la contraseña"
     }
   }
 }
