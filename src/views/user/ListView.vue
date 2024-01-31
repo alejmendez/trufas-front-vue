@@ -11,11 +11,12 @@ const columns = [
   { text: 'Correo', data: 'email' }
 ]
 
+
 const roleColors = {
-  Agricultor: 'border-gray-800 text-gray-800 bg-gray-200',
-  Técnico: 'border-green-800 text-green-800 bg-green-200',
-  Administrador: 'border-blue-800 text-blue-800 bg-blue-200',
-  'Super Admin': 'border-blue-800 text-blue-800 bg-blue-200'
+  Agricultor: 'border-[#E9E9EA] text-[#495057] bg-[#F8F9FA]',
+  Técnico: 'border-[#DAF4E3] text-[#16A34A] bg-[#F0FDF4]',
+  Administrador: 'border-[#DDEEF6] text-[#0B88A0] bg-[#E8F7FF]',
+  'Super Admin': 'border-[#DDEEF6] text-[#0B88A0] bg-[#E8F7FF]'
 }
 </script>
 

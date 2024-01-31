@@ -31,7 +31,7 @@ const props = defineProps({
         v-for="link in props.links"
         :key="link.text"
         :to="link.to"
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 bg-gray-900 rounded-lg focus:shadow-outline hover:bg-gray-800"
+        class="btn btn-primary"
       >
         {{ link.text }}
       </router-link>

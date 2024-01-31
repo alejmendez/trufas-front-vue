@@ -58,6 +58,7 @@ const submitHandler = async () => {
 
     const avatar = avatarInput.value.files[0]
     const formData = new FormData()
+
     if (avatar) {
       formData.append('avatar', avatar)
     }
@@ -124,14 +125,14 @@ const submitPasswordHandler = async () => {
   >
     <template v-slot:header>
       <button
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 bg-gray-900 rounded-lg focus:shadow-outline hover:bg-gray-800"
+        class="btn btn-primary"
         @click="submitHandler"
       >
         {{ t('generics.buttons.save_edit') }}
       </button>
       <router-link
         :to="{ name: 'user.list'}"
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 rounded-lg focus:shadow-outline bg-white text-gray-950 hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 ring-1 ring-gray-950/10 dark:ring-white/20"
+        class="btn btn-secondary"
       >
         {{ t('generics.buttons.cancel') }}
       </router-link>
@@ -159,7 +160,7 @@ const submitPasswordHandler = async () => {
             <input
               ref="avatarInput"
               type="file"
-              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-900 file:text-gray-200 hover:file:bg-gray-700"
+              className="input-file"
             />
           </div>
 
@@ -222,7 +223,7 @@ const submitPasswordHandler = async () => {
 
           <div class="form-text col-span-6 form-text-type">
             <button
-              class="float-right mt-8 px-5 py-2 border-2 border-gray-400 text-gray-700 transition-colors duration-150 bg-white rounded-lg focus:shadow-outline hover:bg-gray-200"
+              class="float-right mt-8 btn btn-secondary"
               @click="submitEmailHandler"
             >
               {{ t('user.buttons.change_e_mail') }}
@@ -246,7 +247,7 @@ const submitPasswordHandler = async () => {
           />
           <div class="form-text col-span-6 form-text-type">
             <button
-              class="float-right mt-8 px-5 py-2 border-2 border-gray-400 text-gray-700 transition-colors duration-150 bg-white rounded-lg focus:shadow-outline hover:bg-gray-200"
+              class="float-right mt-8 btn btn-secondary"
               @click="submitPasswordHandler"
             >
               {{ t('user.buttons.resend_password') }}

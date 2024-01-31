@@ -59,19 +59,19 @@ const submitHandler = async () => {
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: 'Crear' }]"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: t('generics.actions.create') }]"
     :title="t('user.titles.create')"
   >
     <template v-slot:header>
       <button
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 bg-gray-900 rounded-lg focus:shadow-outline hover:bg-gray-800"
+        class="btn btn-primary"
         @click="submitHandler"
       >
         {{ t('generics.buttons.create') }}
       </button>
       <router-link
         :to="{ name: 'user.list'}"
-        class="px-5 py-2 text-gray-100 transition-colors duration-150 rounded-lg focus:shadow-outline bg-white text-gray-950 hover:bg-gray-50 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 ring-1 ring-gray-950/10 dark:ring-white/20"
+        class="btn btn-secondary"
       >
         {{ t('generics.buttons.cancel') }}
       </router-link>
@@ -99,7 +99,7 @@ const submitHandler = async () => {
             <input
               ref="avatarInput"
               type="file"
-              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-900 file:text-gray-200 hover:file:bg-gray-700"
+              className="input-file"
             />
           </div>
 
