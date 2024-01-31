@@ -18,4 +18,39 @@ instance.interceptors.response.use(
   }
 )
 
+export const get = async (url, params = {}) => {
+  const response = await axios.get(url, {
+    params
+  })
+  return response.data
+}
+
+export const post = async (url, data = {}) => {
+  const headers = {}
+  if (data instanceof FormData) {
+    headers['Content-Type'] = 'multipart/form-data'
+  }
+
+  return await axios.post(url, data, {
+    headers,
+  })
+}
+
+export const patch = async (url, data = {}) => {
+  const headers = {}
+
+  if (data instanceof FormData) {
+    data.append('_method', 'PATCH')
+    headers['Content-Type'] = 'multipart/form-data'
+  }
+
+  return await axios.post(url, data, {
+    headers,
+  })
+}
+
+export const del = async (url) => {
+  return await axios.delete(url)
+}
+
 export default instance

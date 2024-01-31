@@ -1,55 +1,38 @@
-import axios from '@/libs/axios'
+import { get, post, patch, del } from '@/libs/axios'
 
 const getList = async (params = {}) => {
-  const response = await axios.get('user', {
+  return await get('user', {
     params
   })
-  return response.data
 }
 
 const getOne = async (id) => {
-  const response = await axios.get(`user/${id}`)
-  return response.data.data
+  const response = await get(`user/${id}`)
+  return response.data
 }
 
 const create = async (data) => {
-  return await axios.post('user', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+  return await post('user', data)
 }
 
 const update = async (id, data) => {
-  return await axios.patch(`user/${id}`,
-    {
-      "_method": "PATCH",
-      ...data
-    },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }
-  )
+  return await patch(`user/${id}`, data)
 }
 
 const updateEmail = async (id, email) => {
-  return await axios.patch(`user/${id}`, {
-    "_method": "PATCH",
+  return await patch(`user/${id}`, {
     email,
   })
 }
 
 const updatePassword = async (id, password) => {
-  return await axios.patch(`user/${id}`, {
-    "_method": "PATCH",
+  return await patch(`user/${id}`, {
     password,
   })
 }
 
 const remove = async (id) => {
-  return await axios.delete(`user/${id}`)
+  return await del(`user/${id}`)
 }
 
 export default {
