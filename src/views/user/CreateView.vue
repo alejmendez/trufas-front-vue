@@ -174,6 +174,7 @@ const submitHandler = async () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
+            open-direction="top"
             :label="t('user.form.role.label')"
             :field-name="t('user.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"

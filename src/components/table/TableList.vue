@@ -4,6 +4,8 @@ import { useToast } from 'vue-toastification'
 import { useI18n } from 'vue-i18n'
 import Swal from 'sweetalert2'
 
+import PaginationTable from './PaginationTable.vue'
+
 const { t } = useI18n()
 
 const props = defineProps({
@@ -23,7 +25,7 @@ const order = reactive({
 })
 const loading = ref(false)
 const search = ref('')
-const page = ref(1)
+const current_page = ref(1)
 
 const data = reactive({
   links: {},
@@ -46,7 +48,7 @@ const listData = async () => {
     const list = await props.listHandler({
       order: orderParams,
       search: search.value,
-      page: page.value
+      page: current_page.value
     })
     data.links = list.links
     data.meta = list.meta
@@ -97,16 +99,16 @@ const deleteHandler = async (id) => {
   }
 }
 
-const getPage = (pageNumber) => {
-  if (page.value === pageNumber) {
+const changePage = (pageNumber) => {
+  console.log({
+    pageNumber
+  })
+  if (current_page.value === pageNumber) {
     return
   }
-  page.value = pageNumber
+  current_page.value = pageNumber
   listData()
 }
-
-const getFirstPage = async () => getPage(1)
-const getLastPage = async () => getPage(data.meta.last_page)
 
 onMounted(listData)
 </script>
@@ -189,37 +191,14 @@ onMounted(listData)
         </tbody>
       </table>
 
-      <nav class="pagination">
-        <p>
-          {{ $t('generics.tables.pagination.show') }}
-          <strong>{{ data.meta.from }}</strong>-
-          <strong>{{ data.meta.to }}</strong>
-          {{ $t('generics.tables.pagination.of') }}
-          <strong>{{ data.meta.total }}</strong>
-        </p>
-
-        <ul>
-          <li>
-            <a class="pagination-link" href="#!" @click="getFirstPage()">
-              <font-awesome-icon :icon="['fa', 'chevron-left']" />
-            </a>
-          </li>
-          <li v-for="pageNumber in data.meta.last_page" :key="pageNumber">
-            <a
-              :class="{ 'pagination-link': pageNumber !== page, current: pageNumber === page }"
-              href="#!"
-              @click="getPage(pageNumber)"
-            >
-              {{ pageNumber }}
-            </a>
-          </li>
-          <li>
-            <a class="pagination-link" href="#!" @click="getLastPage()">
-              <font-awesome-icon :icon="['fa', 'chevron-right']" />
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <PaginationTable
+        :from="data.meta.from"
+        :to="data.meta.to"
+        :total="data.meta.total"
+        :current_page="current_page"
+        :last_page="data.meta.last_page"
+        @changePage="changePage"
+      />
     </div>
   </div>
 </template>

@@ -23,31 +23,23 @@ export const get = async (url, params = {}) => {
   return response.data
 }
 
-const objectHasFileInput = (data = {}) => {
-  return Object.entries(data).filter(value => value[1] instanceof FileList && value[1].files.length).length
+const objectHasFileInput = (data) => {
+  return Object.entries(data).filter(value => value[1].files?.length > 0).length > 0
 }
 
 const objectToFormData = (data = {}) => {
   const formData = new FormData()
   Object.entries(data).forEach(([key, value]) => {
-    if (value instanceof FileList) {
-      const { files } = value
-      formData.append(key, files.length === 1 ? files[0] : files)
-    } else {
-      formData.append(key, value)
-    }
+    formData.append(key, value.files?.length > 0 ? value.files[0] : value)
   })
   return formData
 }
 
-export const _post = async (url, data = {}) => {
+export const _post = async (url, data) => {
   const headers = {}
 
   if (objectHasFileInput(data)) {
     data = objectToFormData(data)
-  }
-
-  if (data instanceof FormData) {
     headers['Content-Type'] = 'multipart/form-data'
   }
 
@@ -56,9 +48,9 @@ export const _post = async (url, data = {}) => {
   })
 }
 
-export const post = (url, data = {}) => _post(url, data)
+export const post = (url, data) => _post(url, data)
 
-export const patch = (url, data = {}) => {
+export const patch = (url, data) => {
   data['_method'] = 'PATCH'
   return _post(url, data)
 }

@@ -15,6 +15,8 @@ import {
   faPencil,
   faTrashCan,
   faCircleNotch,
+  faAnglesLeft,
+  faAnglesRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 const icons = [
@@ -32,6 +34,8 @@ const icons = [
   faPencil,
   faTrashCan,
   faCircleNotch,
+  faAnglesLeft,
+  faAnglesRight,
 ]
 
 export const initFontAwesome = (app) => {

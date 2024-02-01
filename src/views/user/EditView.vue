@@ -15,6 +15,7 @@ const { t } = useI18n()
 const id = route.params.id;
 
 const avatarInput = ref(null)
+const avatarPreview = ref(null)
 const form = ref(null)
 const form$ = ref(null)
 const formRole = ref(null)
@@ -57,7 +58,7 @@ const submitHandler = async () => {
     loading.value = true
 
     const data = {
-      avatar: avatarInput.value.files[0],
+      avatar: avatarInput.value,
       ...form.value,
       ...formRole.value,
     }
@@ -111,6 +112,13 @@ const submitPasswordHandler = async () => {
     loading.value = false
   }
 }
+
+const previewImage = (e) => {
+  const [file] = e.target.files
+  if (file) {
+    avatarPreview.value = URL.createObjectURL(file)
+  }
+}
 </script>
 
 <template>
@@ -152,10 +160,17 @@ const submitPasswordHandler = async () => {
           :display-errors="false"
         >
           <div class="form-text col-span-12 form-text-type">
+            <img
+              class="max-w-32 float-left mr-4"
+              :src="avatarPreview"
+              v-if="avatarPreview"
+            />
             <input
               ref="avatarInput"
               type="file"
-              className="input-file"
+              className="input-file float-left"
+              accept="image/*"
+              @change="previewImage"
             />
           </div>
 
@@ -277,6 +292,7 @@ const submitPasswordHandler = async () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
+            open-direction="top"
             :label="t('user.form.role.label')"
             :field-name="t('user.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
