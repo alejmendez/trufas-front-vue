@@ -56,18 +56,13 @@ const submitHandler = async () => {
 
     loading.value = true
 
-    const avatar = avatarInput.value.files[0]
-    const formData = new FormData()
-
-    if (avatar) {
-      formData.append('avatar', avatar)
+    const data = {
+      avatar: avatarInput.value.files[0],
+      ...form.value,
+      ...formRole.value,
     }
 
-    ;[...Object.entries(form.value), ...Object.entries(formRole.value)].forEach(([key, value]) =>
-      formData.append(key, value)
-    )
-
-    await UserService.update(id, formData)
+    await UserService.update(id, data)
     toast.success(t('generics.messages.saved_successfully'))
 
     router.push({

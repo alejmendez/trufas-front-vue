@@ -21,6 +21,8 @@ const loading = ref(false)
 
 const submitHandler = async () => {
   try {
+    loading.value = true
+
     await form$.value.validate()
     await formRole$.value.validate()
     const invalid = form$.value.invalid || formRole$.value.invalid
@@ -29,20 +31,13 @@ const submitHandler = async () => {
       return
     }
 
-    loading.value = true
-
-    const avatar = avatarInput.value.files[0]
-    const formData = new FormData()
-
-    if (avatar) {
-      formData.append('avatar', avatar)
+    const data = {
+      avatar: avatarInput.value,
+      ...form.value,
+      ...formRole.value,
     }
 
-    ;[...Object.entries(form.value), ...Object.entries(formRole.value)].forEach(([key, value]) =>
-      formData.append(key, value)
-    )
-
-    await UserService.create(formData)
+    await UserService.create(data)
     toast.success(t('generics.messages.saved_successfully'))
 
     router.push({
@@ -65,8 +60,14 @@ const submitHandler = async () => {
     <template v-slot:header>
       <button
         class="btn btn-primary"
+        :disabled="loading"
         @click="submitHandler"
       >
+        <font-awesome-icon
+          class="animate-spin"
+          :icon="['fas', 'circle-notch']"
+          v-show="loading"
+        />
         {{ t('generics.buttons.create') }}
       </button>
       <router-link

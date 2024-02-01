@@ -1,7 +1,10 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useToast } from 'vue-toastification'
+import { useI18n } from 'vue-i18n'
 import Swal from 'sweetalert2'
+
+const { t } = useI18n()
 
 const props = defineProps({
   columns: Array,
@@ -20,6 +23,7 @@ const order = reactive({
 })
 const loading = ref(false)
 const search = ref('')
+const page = ref(1)
 
 const data = reactive({
   links: {},
@@ -41,13 +45,14 @@ const listData = async () => {
     const orderParams = `${order.order}${order.column}`
     const list = await props.listHandler({
       order: orderParams,
-      search: search.value
+      search: search.value,
+      page: page.value
     })
     data.links = list.links
     data.meta = list.meta
     data.data = list.data
   } catch (error) {
-    toast.error('Error al buscar informacion')
+    toast.error(t('generics.tables.errors.searching_for_information'))
   } finally {
     loading.value = false
   }
@@ -72,10 +77,10 @@ const searchHandler = (e) => {
 const deleteHandler = async (id) => {
   try {
     const result = await Swal.fire({
-      title: "¿Está seguro que desea eliminar el registro?",
+      title: t('generics.tables.confirm.delete'),
       showDenyButton: true,
-      confirmButtonText: "Aceptar",
-      denyButtonText: 'Cancelar'
+      confirmButtonText: t('generics.tables.confirm.confirmButton'),
+      denyButtonText: t('generics.tables.confirm.denyButton')
     })
 
     if (!result.isConfirmed) {
@@ -87,10 +92,21 @@ const deleteHandler = async (id) => {
   } catch (error) {
     Swal.fire({
       icon: "error",
-      text: "No se pudo eliminar el registro, intentelo luego",
+      text: t('generics.tables.errors.could_not_delete_the_record'),
     });
   }
 }
+
+const getPage = (pageNumber) => {
+  if (page.value === pageNumber) {
+    return
+  }
+  page.value = pageNumber
+  listData()
+}
+
+const getFirstPage = async () => getPage(1)
+const getLastPage = async () => getPage(data.meta.last_page)
 
 onMounted(listData)
 </script>
@@ -104,11 +120,11 @@ onMounted(listData)
       <!-- Search input -->
       <div class="flex justify-end px-4 py-3 sm:px-6">
         <div class="relative">
-          <label for="inputSearch" class="sr-only">Buscar </label>
+          <label for="inputSearch" class="sr-only">{{ t('generics.tables.search') }} </label>
           <input
             id="inputSearch"
             type="text"
-            placeholder="Search..."
+            :placeholder="t('generics.tables.search') + '...'"
             class="block w-64 rounded-lg border dark:border-none dark:bg-neutral-600 py-2 pl-10 pr-4 text-sm focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400"
             @keyup.enter="searchHandler"
           />
@@ -142,7 +158,7 @@ onMounted(listData)
                 ]"
               />
             </th>
-            <th scope="col" class="px-6 py-3">Acciones</th>
+            <th scope="col" class="px-6 py-3">{{ t('generics.tables.actions') }}</th>
           </tr>
         </thead>
 
@@ -173,55 +189,32 @@ onMounted(listData)
         </tbody>
       </table>
 
-      <nav class="m-5 flex items-center justify-between text-sm">
+      <nav class="pagination">
         <p>
-          Mostrando <strong>{{ data.meta.from }}-{{ data.meta.to }}</strong> de
+          {{ $t('generics.tables.pagination.show') }}
+          <strong>{{ data.meta.from }}</strong>-
+          <strong>{{ data.meta.to }}</strong>
+          {{ $t('generics.tables.pagination.of') }}
           <strong>{{ data.meta.total }}</strong>
         </p>
 
-        <ul class="list-style-none flex">
+        <ul>
           <li>
-            <a
-              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!"
-            >
+            <a class="pagination-link" href="#!" @click="getFirstPage()">
               <font-awesome-icon :icon="['fa', 'chevron-left']" />
             </a>
           </li>
-          <li>
+          <li v-for="pageNumber in data.meta.last_page" :key="pageNumber">
             <a
-              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+              :class="{ 'pagination-link': pageNumber !== page, current: pageNumber === page }"
               href="#!"
+              @click="getPage(pageNumber)"
             >
-              1
-            </a>
-          </li>
-          <li aria-current="page">
-            <a
-              class="relative block rounded bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700 transition-all duration-300"
-              href="#!"
-            >
-              2
-              <span
-                class="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]"
-              >
-                (current)
-              </span>
+              {{ pageNumber }}
             </a>
           </li>
           <li>
-            <a
-              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!"
-            >
-              3
-            </a>
-          </li>
-          <li>
-            <a
-              class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              href="#!"
-            >
+            <a class="pagination-link" href="#!" @click="getLastPage()">
               <font-awesome-icon :icon="['fa', 'chevron-right']" />
             </a>
           </li>

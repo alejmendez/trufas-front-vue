@@ -13,7 +13,7 @@ const toggleSideBar = () => {
 
 <template>
   <div
-    class="w-screen h-screen flex bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white"
+    class="w-full h-full flex bg-gray-50 font-normal text-gray-950 antialiased dark:bg-gray-950 dark:text-white"
   >
     <div class="w-[320px] h-full" v-show="showSide">
       <div class="flex justify-start items-center h-[64px] border-b">
@@ -36,7 +36,7 @@ const toggleSideBar = () => {
           <MenuUser />
         </div>
       </div>
-      <div class="min-h-[calc(100vh-64px)] bg-gray-50 pb-5">
+      <div class="min-h-[calc(100vh-64px)] w-full bg-gray-50 pb-5">
         <main class="py-[10px] px-[25px] h-full">
           <slot></slot>
         </main>

@@ -13,7 +13,8 @@ import {
   faMagnifyingGlass,
   faEye,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons'
 
 const icons = [
@@ -29,7 +30,8 @@ const icons = [
   faMagnifyingGlass,
   faEye,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faCircleNotch,
 ]
 
 export const initFontAwesome = (app) => {
