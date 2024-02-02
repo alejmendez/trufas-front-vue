@@ -269,7 +269,7 @@ const avatarRemoveHandler = () => {
           <div class="form-text col-span-6 form-text-type">
             <button
               class="float-right mt-8 btn btn-secondary"
-              @click="submitEmailHandler"
+              @click.prevent="submitEmailHandler"
             >
               {{ t('user.buttons.change_e_mail') }}
             </button>
@@ -293,7 +293,7 @@ const avatarRemoveHandler = () => {
           <div class="form-text col-span-6 form-text-type">
             <button
               class="float-right mt-8 btn btn-secondary"
-              @click="submitPasswordHandler"
+              @click.prevent="submitPasswordHandler"
             >
               {{ t('user.buttons.resend_password') }}
             </button>
@@ -327,7 +327,6 @@ const avatarRemoveHandler = () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            open-direction="top"
             :label="t('user.form.role.label')"
             :field-name="t('user.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
