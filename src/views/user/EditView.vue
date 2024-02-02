@@ -16,6 +16,7 @@ const id = route.params.id;
 
 const avatarInput = ref(null)
 const avatarPreview = ref(null)
+const avatarRemove = ref(false)
 const form = ref(null)
 const form$ = ref(null)
 const formRole = ref(null)
@@ -30,6 +31,7 @@ const loading = ref(false)
 onMounted(async() => {
   try {
     const user = await UserService.getOne(id)
+    avatarPreview.value = user.avatar
     form$.value.load(user)
     formRole$.value.load({
       role: user.role.name
@@ -59,6 +61,7 @@ const submitHandler = async () => {
 
     const data = {
       avatar: avatarInput.value,
+      avatarRemove: avatarRemove.value,
       ...form.value,
       ...formRole.value,
     }
@@ -116,8 +119,15 @@ const submitPasswordHandler = async () => {
 const previewImage = (e) => {
   const [file] = e.target.files
   if (file) {
+    avatarRemove.value = false
     avatarPreview.value = URL.createObjectURL(file)
   }
+}
+
+const avatarRemoveHandler = () => {
+  avatarRemove.value = true
+  avatarInput.value.value = null
+  avatarPreview.value = null
 }
 </script>
 
@@ -160,18 +170,37 @@ const previewImage = (e) => {
           :display-errors="false"
         >
           <div class="form-text col-span-12 form-text-type">
-            <img
-              class="max-w-32 float-left mr-4"
-              :src="avatarPreview"
-              v-if="avatarPreview"
-            />
-            <input
-              ref="avatarInput"
-              type="file"
-              className="input-file float-left"
-              accept="image/*"
-              @change="previewImage"
-            />
+            <div class="flex flex-row gap-x-5">
+              <div>
+                <div
+                  class="w-32 border rounded-md"
+                  :class="{ 'h-full': !avatarPreview }"
+                >
+                  <img
+                    class="w-full"
+                    :src="avatarPreview"
+                    v-if="avatarPreview"
+                  />
+                </div>
+              </div>
+              <div class="w-full">
+                <div class="mb-2 w-full">Seleccione un imagen</div>
+                <input
+                  ref="avatarInput"
+                  type="file"
+                  className="input-file mb-4"
+                  style="width: 160px;"
+                  accept="image/*"
+                  @change="previewImage"
+                />
+                <button
+                  class="btn btn-secondary"
+                  @click.prevent="avatarRemoveHandler"
+                >
+                  Quitar imagen
+                </button>
+              </div>
+            </div>
           </div>
 
           <TextElement

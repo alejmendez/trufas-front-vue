@@ -39,7 +39,7 @@ body {
   }
 
   .input-file {
-    @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-900 file:text-gray-200 hover:file:bg-gray-700;
+    @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[#CED4DA] file:text-gray-800 hover:file:bg-gray-400;
   }
 
   .btn.btn-primary {
