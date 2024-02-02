@@ -139,8 +139,14 @@ const avatarRemoveHandler = () => {
     <template v-slot:header>
       <button
         class="btn btn-primary"
+        :disabled="loading"
         @click="submitHandler"
       >
+        <font-awesome-icon
+          class="animate-spin"
+          :icon="['fas', 'circle-notch']"
+          v-show="loading"
+        />
         {{ t('generics.buttons.save_edit') }}
       </button>
       <router-link
