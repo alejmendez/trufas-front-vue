@@ -27,6 +27,12 @@
         "of": "de"
       }
     },
+    "form": {
+      "file": {
+        "select_a_image": "Seleccione un imagen",
+        "remove_image": "Quitar imagen"
+      }
+    },
     "buttons": {
       "create": "Crear",
       "save_edit": "Guardar Cambios",

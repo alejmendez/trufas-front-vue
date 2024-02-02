@@ -184,7 +184,7 @@ const avatarRemoveHandler = () => {
                 </div>
               </div>
               <div class="w-full">
-                <div class="mb-2 w-full">Seleccione un imagen</div>
+                <div class="mb-2 w-full">{{ t('generics.form.file.select_a_image') }}</div>
                 <input
                   ref="avatarInput"
                   type="file"
@@ -197,7 +197,7 @@ const avatarRemoveHandler = () => {
                   class="btn btn-secondary"
                   @click.prevent="avatarRemoveHandler"
                 >
-                  Quitar imagen
+                  {{ t('generics.form.file.remove_image') }}
                 </button>
               </div>
             </div>
