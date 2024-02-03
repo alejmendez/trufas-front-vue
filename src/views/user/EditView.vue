@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
+import VInputFile from '@/components/form/VInputFile.vue'
 import UserService from '@/services/user'
 
 const router = useRouter()
@@ -14,9 +15,9 @@ const { t } = useI18n()
 
 const id = route.params.id;
 
-const avatarInput = ref(null)
+const avatar = ref(null)
 const avatarPreview = ref(null)
-const avatarRemove = ref(false)
+const avatarRemove = ref(null)
 const form = ref(null)
 const form$ = ref(null)
 const formRole = ref(null)
@@ -60,7 +61,7 @@ const submitHandler = async () => {
     loading.value = true
 
     const data = {
-      avatar: avatarInput.value,
+      avatar: avatar.value,
       avatarRemove: avatarRemove.value,
       ...form.value,
       ...formRole.value,
@@ -116,18 +117,9 @@ const submitPasswordHandler = async () => {
   }
 }
 
-const changeAvatarHandler = (e) => {
-  const [file] = e.target.files
-  if (file) {
-    avatarRemove.value = false
-    avatarPreview.value = URL.createObjectURL(file)
-  }
-}
-
-const avatarRemoveHandler = () => {
-  avatarRemove.value = true
-  avatarInput.value.value = null
-  avatarPreview.value = null
+const changeFileHandler = (e) => {
+  avatar.value = e.fileInput
+  avatarRemove.value = e.fileRemove
 }
 </script>
 
@@ -176,37 +168,11 @@ const avatarRemoveHandler = () => {
           :display-errors="false"
         >
           <div class="form-text col-span-12 form-text-type">
-            <div class="flex flex-row gap-x-5">
-              <div>
-                <div
-                  class="w-32 border rounded-md"
-                  :class="{ 'h-full': !avatarPreview }"
-                >
-                  <img
-                    class="w-full"
-                    :src="avatarPreview"
-                    v-if="avatarPreview"
-                  />
-                </div>
-              </div>
-              <div class="w-full">
-                <div class="mb-2 w-full">{{ t('generics.form.file.select_a_image') }}</div>
-                <input
-                  ref="avatarInput"
-                  type="file"
-                  className="input-file mb-4"
-                  style="width: 160px;"
-                  accept="image/*"
-                  @change="changeAvatarHandler"
-                />
-                <button
-                  class="btn btn-secondary"
-                  @click.prevent="avatarRemoveHandler"
-                >
-                  {{ t('generics.form.file.remove_image') }}
-                </button>
-              </div>
-            </div>
+            <VInputFile
+              :imagePreview="true"
+              :image="avatarPreview"
+              @change="changeFileHandler"
+            />
           </div>
 
           <TextElement

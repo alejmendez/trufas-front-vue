@@ -19,10 +19,6 @@ const setLocalStorage = (key, val) => {
   localStorage.setItem(key, JSON.stringify(val))
 }
 
-const delLocalStorage = (key) => {
-  localStorage.removeItem(key)
-}
-
 const initRefUser = () =>
   ref(
     getLocalStorage(KEY_LOCALSTORAGE_USER, {
@@ -60,9 +56,9 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function signOut() {
-    delLocalStorage(KEY_LOCALSTORAGE_USER)
-    delLocalStorage(KEY_LOCALSTORAGE_JWT)
+    localStorage.clear();
     axios.defaults.headers.common['Authorization'] = ''
+    window.location.href = "/login";
   }
 
   function refresh(token, expires_in) {

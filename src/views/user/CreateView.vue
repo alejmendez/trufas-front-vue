@@ -5,15 +5,14 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
-import fieldService from '@/services/field'
+import VInputFile from '@/components/form/VInputFile.vue'
+import userService from '@/services/user'
 
 const router = useRouter()
 const toast = useToast()
 const { t } = useI18n()
 
-const avatarInput = ref(null)
-const avatarPreview = ref(null)
-const avatarRemove = ref(false)
+const avatar = ref(null)
 const form = ref(null)
 const form$ = ref(null)
 const formRole = ref(null)
@@ -34,18 +33,19 @@ const submitHandler = async () => {
     }
 
     const data = {
-      avatar: avatarInput.value,
+      avatar: avatar.value,
       ...form.value,
       ...formRole.value,
     }
 
-    await fieldService.create(data)
+    await userService.create(data)
     toast.success(t('generics.messages.saved_successfully'))
 
     router.push({
-      name: 'field.list'
+      name: 'user.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -53,25 +53,15 @@ const submitHandler = async () => {
   }
 }
 
-const changeAvatarHandler = (e) => {
-  const [file] = e.target.files
-  if (file) {
-    avatarRemove.value = false
-    avatarPreview.value = URL.createObjectURL(file)
-  }
-}
-
-const avatarRemoveHandler = () => {
-  avatarRemove.value = true
-  avatarInput.value.value = null
-  avatarPreview.value = null
+const changeFileHandler = (e) => {
+  avatar.value = e.fileInput
 }
 </script>
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'field.list' }, text: t('user.titles.entity_breadcrumb') }, { text: t('generics.actions.create') }]"
-    :title="t('field.titles.create')"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: t('user.titles.entity_breadcrumb') }, { text: t('generics.actions.create') }]"
+    :title="t('user.titles.create')"
   >
     <template v-slot:header>
       <button
@@ -87,7 +77,7 @@ const avatarRemoveHandler = () => {
         {{ t('generics.buttons.create') }}
       </button>
       <router-link
-        :to="{ name: 'field.list'}"
+        :to="{ name: 'user.list'}"
         class="btn btn-secondary"
       >
         {{ t('generics.buttons.cancel') }}
@@ -99,7 +89,7 @@ const avatarRemoveHandler = () => {
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        {{ t('field.sections.details') }}
+        {{ t('user.sections.details') }}
       </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
@@ -112,80 +102,53 @@ const avatarRemoveHandler = () => {
           :columns="{ container: 6, label: 12, wrapper: 12 }"
           :display-errors="false"
         >
-        <div class="form-text col-span-12 form-text-type">
-            <div class="flex flex-row gap-x-5">
-              <div>
-                <div
-                  class="w-32 border rounded-md"
-                  :class="{ 'h-full': !avatarPreview }"
-                >
-                  <img
-                    class="w-full"
-                    :src="avatarPreview"
-                    v-if="avatarPreview"
-                  />
-                </div>
-              </div>
-              <div class="w-full">
-                <div class="mb-2 w-full">{{ t('generics.form.file.select_a_image') }}</div>
-                <input
-                  ref="avatarInput"
-                  type="file"
-                  className="input-file mb-4"
-                  style="width: 160px;"
-                  accept="image/*"
-                  @change="changeAvatarHandler"
-                />
-                <button
-                  class="btn btn-secondary"
-                  @click.prevent="avatarRemoveHandler"
-                >
-                  {{ t('generics.form.file.remove_image') }}
-                </button>
-              </div>
-            </div>
+          <div class="form-text col-span-12 form-text-type">
+            <VInputFile
+              :imagePreview="true"
+              @change="changeFileHandler"
+            />
           </div>
 
           <TextElement
             name="dni"
-            :label="t('field.form.dni.label')"
-            :field-name="t('field.form.dni.name')"
+            :label="t('user.form.dni.label')"
+            :field-name="t('user.form.dni.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="name"
-            :label="t('field.form.name.label')"
-            :field-name="t('field.form.name.name')"
+            :label="t('user.form.name.label')"
+            :field-name="t('user.form.name.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="last_name"
-            :label="t('field.form.last_name.label')"
-            :field-name="t('field.form.last_name.name')"
+            :label="t('user.form.last_name.label')"
+            :field-name="t('user.form.last_name.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="email"
-            :label="t('field.form.email.label')"
-            :field-name="t('field.form.email.name')"
+            :label="t('user.form.email.label')"
+            :field-name="t('user.form.email.name')"
             rules="required|email|max:255"
           />
 
           <TextElement
             name="phone"
-            :label="t('field.form.phone.label')"
-            :field-name="t('field.form.phone.name')"
+            :label="t('user.form.phone.label')"
+            :field-name="t('user.form.phone.name')"
             rules="required|max:17"
           />
 
           <TextElement
             name="password"
             input-type="password"
-            :label="t('field.form.password.label')"
-            :field-name="t('field.form.password.name')"
+            :label="t('user.form.password.label')"
+            :field-name="t('user.form.password.name')"
             rules="required|min:6"
           />
         </Vueform>
@@ -197,7 +160,7 @@ const avatarRemoveHandler = () => {
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        {{ t('field.sections.roles') }}
+        {{ t('user.sections.roles') }}
       </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
@@ -216,8 +179,8 @@ const avatarRemoveHandler = () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            :label="t('field.form.role.label')"
-            :field-name="t('field.form.role.name')"
+            :label="t('user.form.role.label')"
+            :field-name="t('user.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
           />
         </Vueform>
