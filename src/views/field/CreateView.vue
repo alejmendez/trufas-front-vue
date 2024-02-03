@@ -5,14 +5,14 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
+import VInputFile from '@/components/form/VInputFile.vue'
 import fieldService from '@/services/field'
 
 const router = useRouter()
 const toast = useToast()
 const { t } = useI18n()
 
-const blueprintInput = ref(null)
-const blueprintRemove = ref(false)
+const blueprint = ref(null)
 const form = ref(null)
 const form$ = ref(null)
 
@@ -29,7 +29,7 @@ const submitHandler = async () => {
     }
 
     const data = {
-      blueprint: blueprintInput.value,
+      blueprint: blueprint.value,
       ...form.value,
     }
 
@@ -48,16 +48,8 @@ const submitHandler = async () => {
   }
 }
 
-const changeBlueprintHandler = (e) => {
-  const [file] = e.target.files
-  if (file) {
-    blueprintRemove.value = false
-  }
-}
-
-const blueprintRemoveHandler = () => {
-  blueprintRemove.value = true
-  blueprintInput.value.value = null
+const changeFileHandler = (e) => {
+  blueprint.value = e.fileInput
 }
 </script>
 
@@ -135,24 +127,9 @@ const blueprintRemoveHandler = () => {
     <div class="border-t border-gray-200 dark:border-white/10">
       <div class="p-6">
         <div class="form-text col-span-12 form-text-type">
-          <div class="flex flex-row gap-x-5">
-            <div class="w-full">
-              <div class="mb-2 w-full">{{ t('generics.form.file.select_a_image') }}</div>
-              <input
-                ref="blueprintInput"
-                type="file"
-                className="input-file mb-4"
-                accept="image/*"
-                @change="changeBlueprintHandler"
-              />
-              <button
-                class="btn btn-secondary"
-                @click.prevent="blueprintRemoveHandler"
-              >
-                {{ t('generics.form.file.remove_image') }}
-              </button>
-            </div>
-          </div>
+          <VInputFile
+            @change="changeFileHandler"
+          />
         </div>
       </div>
     </div>
