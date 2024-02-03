@@ -116,7 +116,7 @@ const submitPasswordHandler = async () => {
   }
 }
 
-const previewImage = (e) => {
+const changeAvatarHandler = (e) => {
   const [file] = e.target.files
   if (file) {
     avatarRemove.value = false
@@ -133,7 +133,7 @@ const avatarRemoveHandler = () => {
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: t('generics.actions.edit') }]"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: t('user.titles.entity_breadcrumb') }, { text: t('generics.actions.edit') }]"
     :title="t('user.titles.edit')"
   >
     <template v-slot:header>
@@ -197,7 +197,7 @@ const avatarRemoveHandler = () => {
                   className="input-file mb-4"
                   style="width: 160px;"
                   accept="image/*"
-                  @change="previewImage"
+                  @change="changeAvatarHandler"
                 />
                 <button
                   class="btn btn-secondary"
@@ -271,7 +271,7 @@ const avatarRemoveHandler = () => {
               class="float-right mt-8 btn btn-secondary"
               @click.prevent="submitEmailHandler"
             >
-              {{ t('user.buttons.change_e_mail') }}
+              {{ t('user.buttons.change_email') }}
             </button>
           </div>
         </Vueform>

@@ -66,11 +66,11 @@ const lastPage = async () => getPage(props.last_page)
 </script>
 
 <template>
-  <nav class="pagination">
+  <nav class="pagination" v-if="props.total > 0">
     <p>
       {{ $t('generics.tables.pagination.show') }}
-      <strong>{{ props.from }}</strong>-
-      <strong>{{ props.to }}</strong>
+      <strong>{{ props.from || 0 }}</strong> -
+      <strong>{{ props.to || 0 }}</strong>
       {{ $t('generics.tables.pagination.of') }}
       <strong>{{ props.total }}</strong>
     </p>

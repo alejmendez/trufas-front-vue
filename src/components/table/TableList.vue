@@ -160,7 +160,7 @@ onMounted(listData)
                 ]"
               />
             </th>
-            <th scope="col" class="px-6 py-3">{{ t('generics.tables.actions') }}</th>
+            <th scope="col" class="px-6 py-3 w-[140px]">{{ t('generics.tables.actions') }}</th>
           </tr>
         </thead>
 
@@ -186,6 +186,18 @@ onMounted(listData)
               :key="item.id"
             >
               <slot :item="item" :deleteEvent="deleteHandler" />
+            </tr>
+
+            <tr
+              class="border-b dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-600"
+              v-if="data.data.length === 0"
+            >
+              <td
+                class="px-6 py-3 text-center"
+                :colspan="props.columns.length + 1"
+              >
+                {{ t('generics.tables.empty') }}
+              </td>
             </tr>
           </template>
         </tbody>

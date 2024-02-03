@@ -18,6 +18,7 @@
         "confirmButton": "Aceptar",
         "denyButton": "Cancelar"
       },
+      "empty": "No se encontraron registros",
       "errors": {
         "searching_for_information": "Error al buscar información",
         "could_not_delete_the_record": "No se pudo eliminar el registro, intentelo luego"
@@ -58,6 +59,7 @@
   },
   "user": {
     "titles": {
+      "entity_breadcrumb": "Usuarios",
       "create": "Crear Usuario",
       "edit": "Editar Usuario"
     },
@@ -101,8 +103,39 @@
       "roles": "Permisos"
     },
     "buttons": {
-      "change_e_mail": "Cambiar correo",
+      "change_email": "Cambiar correo",
       "resend_password": "Reenvía la contraseña"
+    }
+  },
+  "field": {
+    "titles": {
+      "entity_breadcrumb": "Campo",
+      "create": "Crear Campo",
+      "edit": "Editar Campo"
+    },
+    "form": {
+      "name": {
+        "label": "Nombre del campo",
+        "name": "nombre"
+      },
+      "location": {
+        "label": "Ubicación",
+        "name": "ubicación"
+      },
+      "size": {
+        "label": "Superficie del campo",
+        "name": "superficie"
+      },
+      "number_of_trees": {
+        "label": "Cantidad de arboles"
+      },
+      "blueprint": {
+        "label": "Contraseña",
+        "name": "contraseña"
+      }
+    },
+    "sections": {
+      "blueprint": "Planos"
     }
   }
 }

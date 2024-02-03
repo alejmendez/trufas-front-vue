@@ -24,6 +24,7 @@ export const get = async (url, params = {}) => {
 }
 
 const objectHasFileInput = (data) => {
+  console.log(data)
   return Object.entries(data).filter(value => value[1].files?.length > 0).length > 0
 }
 

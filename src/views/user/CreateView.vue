@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
-import UserService from '@/services/user'
+import fieldService from '@/services/field'
 
 const router = useRouter()
 const toast = useToast()
@@ -39,11 +39,11 @@ const submitHandler = async () => {
       ...formRole.value,
     }
 
-    await UserService.create(data)
+    await fieldService.create(data)
     toast.success(t('generics.messages.saved_successfully'))
 
     router.push({
-      name: 'user.list'
+      name: 'field.list'
     })
   } catch (error) {
     const message = error?.response?.data?.message
@@ -53,7 +53,7 @@ const submitHandler = async () => {
   }
 }
 
-const previewImage = (e) => {
+const changeAvatarHandler = (e) => {
   const [file] = e.target.files
   if (file) {
     avatarRemove.value = false
@@ -70,8 +70,8 @@ const avatarRemoveHandler = () => {
 
 <template>
   <HeaderCrud
-    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: t('generics.actions.create') }]"
-    :title="t('user.titles.create')"
+    :breadcrumbs="[{ to: { name: 'field.list' }, text: t('user.titles.entity_breadcrumb') }, { text: t('generics.actions.create') }]"
+    :title="t('field.titles.create')"
   >
     <template v-slot:header>
       <button
@@ -87,7 +87,7 @@ const avatarRemoveHandler = () => {
         {{ t('generics.buttons.create') }}
       </button>
       <router-link
-        :to="{ name: 'user.list'}"
+        :to="{ name: 'field.list'}"
         class="btn btn-secondary"
       >
         {{ t('generics.buttons.cancel') }}
@@ -99,7 +99,7 @@ const avatarRemoveHandler = () => {
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        {{ t('user.sections.details') }}
+        {{ t('field.sections.details') }}
       </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
@@ -134,7 +134,7 @@ const avatarRemoveHandler = () => {
                   className="input-file mb-4"
                   style="width: 160px;"
                   accept="image/*"
-                  @change="previewImage"
+                  @change="changeAvatarHandler"
                 />
                 <button
                   class="btn btn-secondary"
@@ -148,44 +148,44 @@ const avatarRemoveHandler = () => {
 
           <TextElement
             name="dni"
-            :label="t('user.form.dni.label')"
-            :field-name="t('user.form.dni.name')"
+            :label="t('field.form.dni.label')"
+            :field-name="t('field.form.dni.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="name"
-            :label="t('user.form.name.label')"
-            :field-name="t('user.form.name.name')"
+            :label="t('field.form.name.label')"
+            :field-name="t('field.form.name.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="last_name"
-            :label="t('user.form.last_name.label')"
-            :field-name="t('user.form.last_name.name')"
+            :label="t('field.form.last_name.label')"
+            :field-name="t('field.form.last_name.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="email"
-            :label="t('user.form.email.label')"
-            :field-name="t('user.form.email.name')"
+            :label="t('field.form.email.label')"
+            :field-name="t('field.form.email.name')"
             rules="required|email|max:255"
           />
 
           <TextElement
             name="phone"
-            :label="t('user.form.phone.label')"
-            :field-name="t('user.form.phone.name')"
+            :label="t('field.form.phone.label')"
+            :field-name="t('field.form.phone.name')"
             rules="required|max:17"
           />
 
           <TextElement
             name="password"
             input-type="password"
-            :label="t('user.form.password.label')"
-            :field-name="t('user.form.password.name')"
+            :label="t('field.form.password.label')"
+            :field-name="t('field.form.password.name')"
             rules="required|min:6"
           />
         </Vueform>
@@ -197,7 +197,7 @@ const avatarRemoveHandler = () => {
   >
     <header class="flex items-center gap-x-3 overflow-hidden px-6 py-4">
       <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-        {{ t('user.sections.roles') }}
+        {{ t('field.sections.roles') }}
       </h3>
     </header>
     <div class="border-t border-gray-200 dark:border-white/10">
@@ -216,8 +216,8 @@ const avatarRemoveHandler = () => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            :label="t('user.form.role.label')"
-            :field-name="t('user.form.role.name')"
+            :label="t('field.form.role.label')"
+            :field-name="t('field.form.role.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
           />
         </Vueform>
