@@ -52,6 +52,10 @@ const fileRemoveHandler = () => {
   fileRemove.value = true
   fileInput.value.value = null
   filePreview.value = null
+  emit('change', {
+    fileRemove: fileRemove.value,
+    fileInput: fileInput.value,
+  })
 }
 </script>
 

@@ -103,9 +103,7 @@ const deleteHandler = async (id) => {
 }
 
 const changePage = (pageNumber) => {
-  console.log({
-    pageNumber
-  })
+
   if (current_page.value === pageNumber) {
     return
   }

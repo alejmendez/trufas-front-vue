@@ -44,7 +44,6 @@ const submitHandler = async () => {
       name: 'plant.list'
     })
   } catch (error) {
-    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
