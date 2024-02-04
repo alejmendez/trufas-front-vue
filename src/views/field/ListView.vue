@@ -13,8 +13,8 @@ const columns = [
 
 <template>
   <HeaderCrud
-    title="Usuarios"
-    :breadcrumbs="[{ to: { name: 'field.list' }, text: 'Usuarios' }, { text: 'Listado' }]"
+    :title="t('field.titles.entity_breadcrumb')"
+    :breadcrumbs="[{ to: { name: 'field.list' }, text: t('field.titles.entity_breadcrumb') }, { text: 'Listado' }]"
     :links="[{ to: { name: 'field.create' }, text: 'Ingresar' }]"
   />
 
