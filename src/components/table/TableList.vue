@@ -82,7 +82,9 @@ const deleteHandler = async (id) => {
       title: t('generics.tables.confirm.delete'),
       showDenyButton: true,
       confirmButtonText: t('generics.tables.confirm.confirmButton'),
-      denyButtonText: t('generics.tables.confirm.denyButton')
+      denyButtonText: t('generics.tables.confirm.denyButton'),
+      confirmButtonColor: "#111827",
+      cancelButtonColor: "#ffffff",
     })
 
     if (!result.isConfirmed) {
@@ -90,6 +92,7 @@ const deleteHandler = async (id) => {
     }
 
     await props.deleteHandler(id)
+    toast.success(t('generics.messages.deleted_successfully'))
     listData()
   } catch (error) {
     Swal.fire({

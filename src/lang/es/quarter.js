@@ -1,8 +1,15 @@
 export default {
   titles: {
-    entity_breadcrumb: 'Cuartel',
+    entity_breadcrumb: 'Cuarteles',
     create: 'Crear Cuartel',
     edit: 'Editar Cuartel'
+  },
+  table: {
+    name: 'cuartel',
+    field_id: 'campo',
+    planned_at: 'f. plantación',
+    area: 'superficie',
+    number_of_trees: 'arboles',
   },
   form: {
     name: {

@@ -7,13 +7,13 @@ import plantService from '@/services/plant'
 const { t } = useI18n()
 
 const columns = [
-  { text: 'planta', data: 'name' },
-  { text: 'cuartel', data: 'quarter_id' },
-  { text: 'campo', data: 'field_id' },
-  { text: 'Ubicación', data: 'location' },
-  { text: 'tipo de planta', data: 'type' },
-  { text: 'edad', data: 'age' },
-  { text: 'responsable', data: 'manager' },
+  { text: t('plant.table.name'), data: 'name' },
+  { text: t('plant.table.quarter_id'), data: 'quarter_id' },
+  { text: t('plant.table.field_id'), data: 'field_id' },
+  { text: t('plant.table.location'), data: 'location' },
+  { text: t('plant.table.type'), data: 'type' },
+  { text: t('plant.table.age'), data: 'age' },
+  { text: t('plant.table.manager'), data: 'manager' },
 ]
 </script>
 

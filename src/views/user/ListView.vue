@@ -1,16 +1,18 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import TableList from '@/components/table/TableList.vue'
 import UserService from '@/services/user'
 
-const columns = [
-  { text: 'Nombre', data: 'name' },
-  { text: 'RUT / ID', data: 'dni' },
-  { text: 'Teléfono', data: 'phone' },
-  { text: 'Tipo de usuario', data: 'role' },
-  { text: 'Correo', data: 'email' }
-]
+const { t } = useI18n()
 
+const columns = [
+  { text: t('user.table.name'), data: 'name' },
+  { text: t('user.table.dni'), data: 'dni' },
+  { text: t('user.table.phone'), data: 'phone' },
+  { text: t('user.table.role'), data: 'role' },
+  { text: t('user.table.email'), data: 'email' }
+]
 
 const roleColors = {
   Agricultor: 'border-[#E9E9EA] text-[#495057] bg-[#F8F9FA]',
@@ -22,8 +24,8 @@ const roleColors = {
 
 <template>
   <HeaderCrud
-    title="Usuarios"
-    :breadcrumbs="[{ to: { name: 'user.list' }, text: 'Usuarios' }, { text: 'Listado' }]"
+    :title="t('user.titles.entity_breadcrumb')"
+    :breadcrumbs="[{ to: { name: 'user.list' }, text: t('user.titles.entity_breadcrumb') }, { text: 'Listado' }]"
     :links="[{ to: { name: 'user.create' }, text: 'Ingresar' }]"
   />
 

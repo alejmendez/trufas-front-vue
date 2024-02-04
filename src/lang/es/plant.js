@@ -1,8 +1,17 @@
 export default {
   titles: {
-    entity_breadcrumb: 'Planta',
+    entity_breadcrumb: 'Plantas',
     create: 'Crear Planta',
     edit: 'Editar Planta'
+  },
+  table: {
+    name: 'planta',
+    quarter_id: 'cuartel',
+    field_id: 'campo',
+    location: 'Ubicación',
+    type: 'tipo de planta',
+    age: 'edad',
+    manager: 'responsable',
   },
   form: {
     name: {

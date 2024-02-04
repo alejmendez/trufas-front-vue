@@ -26,6 +26,9 @@ const fileRemove = ref(false)
 const filePreview = ref(null)
 
 const preview = computed(() => {
+  if (fileRemove.value) {
+    return null
+  }
   if (filePreview.value) {
     return filePreview.value
   }

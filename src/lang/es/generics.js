@@ -1,6 +1,7 @@
 export default {
   messages: {
     saved_successfully: 'Guardado satisfactoriamente',
+    deleted_successfully: 'Eliminado satisfactoriamente',
     entity_not_found: 'Registro no encontrado, intente nuevamente'
   },
   errors: {

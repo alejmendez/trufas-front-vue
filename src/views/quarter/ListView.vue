@@ -7,11 +7,11 @@ import quarterService from '@/services/quarter'
 const { t } = useI18n()
 
 const columns = [
-  { text: 'cuartel', data: 'name' },
-  { text: 'campo', data: 'field_id' },
-  { text: 'f. plantación', data: 'planned_at' },
-  { text: 'superficie', data: 'area' },
-  { text: 'arboles', data: 'number_of_trees' },
+  { text: t('quarter.table.name'), data: 'name' },
+  { text: t('quarter.table.field_id'), data: 'field_id' },
+  { text: t('quarter.table.planned_at'), data: 'planned_at' },
+  { text: t('quarter.table.area'), data: 'area' },
+  { text: t('quarter.table.number_of_trees'), data: 'number_of_trees' },
 ]
 </script>
 

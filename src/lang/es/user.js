@@ -4,6 +4,13 @@ export default {
     create: 'Crear Usuario',
     edit: 'Editar Usuario'
   },
+  table: {
+    name: 'Nombre',
+    dni: 'RUT / ID',
+    phone: 'Teléfono',
+    role: 'Tipo de usuario',
+    email: 'Correo',
+  },
   form: {
     name: {
       label: 'Nombre',

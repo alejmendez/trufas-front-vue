@@ -1,13 +1,16 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import TableList from '@/components/table/TableList.vue'
 import FieldService from '@/services/field'
 
+const { t } = useI18n()
+
 const columns = [
-  { text: 'Campo', data: 'name' },
-  { text: 'Ubicación', data: 'location' },
-  { text: 'Superficie', data: 'size' },
-  { text: 'Arboles', data: 'number_of_trees' },
+  { text: t('field.table.name'), data: 'name' },
+  { text: t('field.table.location'), data: 'location' },
+  { text: t('field.table.size'), data: 'size' },
+  { text: t('field.table.number_of_trees'), data: 'number_of_trees' },
 ]
 </script>
 
