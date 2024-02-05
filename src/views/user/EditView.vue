@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
+import { MaskInput } from "maska"
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import VInputFile from '@/components/form/VInputFile.vue'
@@ -15,6 +16,7 @@ const { t } = useI18n()
 
 const id = route.params.id;
 
+const dniInput = ref(null)
 const avatar = ref(null)
 const avatarPreview = ref(null)
 const avatarRemove = ref(null)
@@ -31,6 +33,20 @@ const loading = ref(false)
 
 onMounted(async() => {
   try {
+    new MaskInput("#dni", {
+      mask: "##.###.###-K",
+      tokens: {
+        K: {
+          pattern: /[0-9|k]/i,
+          transform: chr => chr.toUpperCase(),
+        }
+      },
+    })
+
+    new MaskInput("#phone", {
+      mask: "(+##) # #### ####",
+    })
+
     const user = await UserService.getOne(id)
     avatarPreview.value = user.avatar
     form$.value.load(user)
@@ -176,27 +192,30 @@ const changeFileHandler = (e) => {
           </div>
 
           <TextElement
+            id="dni"
             name="dni"
+            ref="dniInput"
             :label="t('user.form.dni.label')"
             :field-name="t('user.form.dni.name')"
-            rules="required|max:255"
+            rules="required"
           />
 
           <TextElement
             name="name"
             :label="t('user.form.name.label')"
             :field-name="t('user.form.name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement
             name="last_name"
             :label="t('user.form.last_name.label')"
             :field-name="t('user.form.last_name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement
+            id="phone"
             name="phone"
             :label="t('user.form.phone.label')"
             :field-name="t('user.form.phone.name')"

@@ -1,8 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
+import { MaskInput } from "maska"
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import VInputFile from '@/components/form/VInputFile.vue'
@@ -19,6 +20,28 @@ const formRole = ref(null)
 const formRole$ = ref(null)
 
 const loading = ref(false)
+
+onMounted(() => {
+  new MaskInput("#dni", {
+    mask: "##.###.###-K",
+    tokens: {
+      K: {
+        pattern: /[0-9|k]/i,
+        transform: chr => chr.toUpperCase(),
+      }
+    },
+  })
+
+  new MaskInput("#phone", {
+    mask: "(+##) # #### ####",
+    tokens: {
+      F: {
+        pattern: /[0-9|f]/i,
+        transform: chr => chr.toUpperCase(),
+      }
+    },
+  })
+})
 
 const submitHandler = async () => {
   try {
@@ -109,6 +132,7 @@ const changeFileHandler = (e) => {
           </div>
 
           <TextElement
+            id="dni"
             name="dni"
             :label="t('user.form.dni.label')"
             :field-name="t('user.form.dni.name')"
@@ -119,14 +143,14 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('user.form.name.label')"
             :field-name="t('user.form.name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement
             name="last_name"
             :label="t('user.form.last_name.label')"
             :field-name="t('user.form.last_name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement
@@ -137,6 +161,7 @@ const changeFileHandler = (e) => {
           />
 
           <TextElement
+            id="phone"
             name="phone"
             :label="t('user.form.phone.label')"
             :field-name="t('user.form.phone.name')"

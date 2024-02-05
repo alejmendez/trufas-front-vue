@@ -95,7 +95,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('field.form.name.label')"
             :field-name="t('field.form.name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement

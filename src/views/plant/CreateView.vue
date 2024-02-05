@@ -99,7 +99,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('plant.form.name.label')"
             :plant-name="t('plant.form.name.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
 
           <TextElement
@@ -125,7 +125,7 @@ const changeFileHandler = (e) => {
             name="manager"
             :label="t('plant.form.manager.label')"
             :plant-name="t('plant.form.manager.name')"
-            rules="required|max:255"
+            rules="required|alpha|min:3|max:255"
           />
           <TextElement
             name="code"
