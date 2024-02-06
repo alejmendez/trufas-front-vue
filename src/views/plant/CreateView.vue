@@ -172,8 +172,8 @@ const changeFileHandler = (e) => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            :label="t('quarter.form.quarter_id.label')"
-            :field-name="t('quarter.form.quarter_id.name')"
+            :label="t('plant.form.quarter_id.label')"
+            :field-name="t('plant.form.quarter_id.name')"
             :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
           />
 
