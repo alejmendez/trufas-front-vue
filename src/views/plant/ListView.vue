@@ -31,8 +31,8 @@ const columns = [
     v-slot="table"
   >
     <td class="px-6 py-3">{{ table.item.name }}</td>
-    <td class="px-6 py-3">{{ table.item.quarter_id }}</td>
-    <td class="px-6 py-3">{{ table.item.field_id }}</td>
+    <td class="px-6 py-3">{{ table.item.quarter.name }}</td>
+    <td class="px-6 py-3">{{ table.item.field.name }}</td>
     <td class="px-6 py-3">{{ table.item.location }}</td>
     <td class="px-6 py-3">{{ table.item.type }}</td>
     <td class="px-6 py-3">{{ table.item.siageze }}</td>

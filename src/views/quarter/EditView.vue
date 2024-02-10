@@ -6,6 +6,7 @@ import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import VInputFile from '@/components/form/VInputFile.vue'
+import fieldService from '@/services/field'
 import quarterService from '@/services/quarter'
 
 const router = useRouter()
@@ -20,12 +21,20 @@ const blueprintPreview = ref(null)
 const blueprintRemove = ref(false)
 const form = ref(null)
 const form$ = ref(null)
+const fieldSelect = ref({})
 
 const loading = ref(false)
 
 onMounted(async() => {
   try {
-    const quarter = await quarterService.getOne(id)
+    const results = await Promise.all([
+      quarterService.getOne(id),
+      fieldService.getListSelect()
+    ])
+
+    const quarter = results[0]
+    fieldSelect.value = results[1]
+
     blueprintPreview.value = quarter.blueprint
     form$.value.load(quarter)
   } catch (error) {
@@ -59,6 +68,7 @@ const submitHandler = async () => {
       name: 'quarter.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -116,7 +126,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('quarter.form.name.label')"
             :field-name="t('quarter.form.name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
@@ -154,7 +164,8 @@ const changeFileHandler = (e) => {
             autocomplete="disabled"
             :label="t('quarter.form.field_id.label')"
             :field-name="t('quarter.form.field_id.name')"
-            :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
+            :items="fieldSelect"
+            rules="required"
           />
         </Vueform>
       </div>

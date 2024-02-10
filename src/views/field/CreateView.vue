@@ -40,6 +40,7 @@ const submitHandler = async () => {
       name: 'field.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -95,7 +96,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('field.form.name.label')"
             :field-name="t('field.form.name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement

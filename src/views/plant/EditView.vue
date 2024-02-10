@@ -64,6 +64,7 @@ const submitHandler = async () => {
       name: 'plant.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -121,7 +122,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('plant.form.name.label')"
             :plant-name="t('plant.form.name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
@@ -147,7 +148,7 @@ const changeFileHandler = (e) => {
             name="manager"
             :label="t('plant.form.manager.label')"
             :plant-name="t('plant.form.manager.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
           <TextElement
             name="code"

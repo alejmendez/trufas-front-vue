@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useToast } from 'vue-toastification'
 
 import HeaderCrud from '@/components/crud/HeaderCrud.vue'
 import VInputFile from '@/components/form/VInputFile.vue'
+import fieldService from '@/services/field'
+import quarterService from '@/services/quarter'
 import plantService from '@/services/plant'
 
 const router = useRouter()
@@ -17,8 +19,19 @@ const form = ref(null)
 const form$ = ref(null)
 const formLocation = ref(null)
 const formLocation$ = ref(null)
+const fieldSelect = ref({})
+const quarterSelect = ref({})
 
 const loading = ref(false)
+
+onMounted(async() => {
+  try {
+    fieldSelect.value = await fieldService.getListSelect()
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 
 const submitHandler = async () => {
   try {
@@ -44,6 +57,7 @@ const submitHandler = async () => {
       name: 'plant.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -52,6 +66,17 @@ const submitHandler = async () => {
 }
 
 const changeFileHandler = (e) => {
+  blueprint.value = e.fileInput
+}
+
+const fieldIdChangeHandler = async (e) => {
+  try {
+    quarterSelect.value = await quarterService.getListSelect({
+      field_id: form.value.field_id
+    })
+  } catch (error) {
+    console.log(error)
+  }
   blueprint.value = e.fileInput
 }
 </script>
@@ -99,7 +124,7 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('plant.form.name.label')"
             :plant-name="t('plant.form.name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
@@ -125,7 +150,7 @@ const changeFileHandler = (e) => {
             name="manager"
             :label="t('plant.form.manager.label')"
             :plant-name="t('plant.form.manager.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
           <TextElement
             name="code"
@@ -157,13 +182,14 @@ const changeFileHandler = (e) => {
         >
           <SelectElement
             name="field_id"
-            :search="true"
-            :native="false"
             input-type="search"
             autocomplete="disabled"
-            :label="t('quarter.form.field_id.label')"
-            :field-name="t('quarter.form.field_id.name')"
-            :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
+            :search="true"
+            :native="false"
+            :label="t('plant.form.field_id.label')"
+            :field-name="t('plant.form.field_id.name')"
+            :items="fieldSelect"
+            @change="fieldIdChangeHandler"
           />
 
           <SelectElement
@@ -172,9 +198,9 @@ const changeFileHandler = (e) => {
             :native="false"
             input-type="search"
             autocomplete="disabled"
-            :label="t('quarter.form.quarter_id.label')"
-            :field-name="t('quarter.form.quarter_id.name')"
-            :items="['Super Admin', 'Administrador', 'Técnico', 'Agricultor']"
+            :label="t('plant.form.quarter_id.label')"
+            :field-name="t('plant.form.quarter_id.name')"
+            :items="quarterSelect"
           />
 
           <TextElement

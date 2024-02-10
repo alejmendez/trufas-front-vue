@@ -29,7 +29,7 @@ const columns = [
     v-slot="table"
   >
     <td class="px-6 py-3">{{ table.item.name }}</td>
-    <td class="px-6 py-3">{{ table.item.field_id }}</td>
+    <td class="px-6 py-3">{{ table.item.field.name }}</td>
     <td class="px-6 py-3">{{ table.item.planned_at }}</td>
     <td class="px-6 py-3">{{ table.item.area }}</td>
     <td class="px-6 py-3">{{ table.item.number_of_trees }}</td>

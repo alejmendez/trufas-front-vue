@@ -6,6 +6,13 @@ const getList = (params = {}) => {
   })
 }
 
+const getListSelect = (params = {}) => {
+  return getList({
+    ...params,
+    type_result: 'select'
+  })
+}
+
 const getOne = async (id) => {
   const response = await get(`field/${id}`)
   return response.data
@@ -25,6 +32,7 @@ const remove = (id) => {
 
 export default {
   getList,
+  getListSelect,
   getOne,
   create,
   update,

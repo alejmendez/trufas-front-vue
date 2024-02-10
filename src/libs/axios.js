@@ -30,6 +30,9 @@ const objectHasFileInput = (data) => {
 const objectToFormData = (data = {}) => {
   const formData = new FormData()
   Object.entries(data).forEach(([key, value]) => {
+    if (value === null || value === undefined) {
+      return
+    }
     formData.append(key, value.files?.length > 0 ? value.files[0] : value)
   })
   return formData

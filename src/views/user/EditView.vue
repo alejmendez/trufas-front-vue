@@ -126,6 +126,7 @@ const submitPasswordHandler = async () => {
       name: 'user.list'
     })
   } catch (error) {
+    console.log(error)
     const message = error?.response?.data?.message
     toast.error(message ? message : t('generics.errors.trying_to_save'))
   } finally {
@@ -204,14 +205,14 @@ const changeFileHandler = (e) => {
             name="name"
             :label="t('user.form.name.label')"
             :field-name="t('user.form.name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
             name="last_name"
             :label="t('user.form.last_name.label')"
             :field-name="t('user.form.last_name.name')"
-            rules="required|alpha|min:3|max:255"
+            :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
