@@ -77,53 +77,48 @@ const lastPage = async () => getPage(props.last_page)
 
     <ul>
       <li>
-        <a
+        <button
           class="pagination-link"
           :class="{ 'opacity-35': current_page === 1 }"
-          href="#!"
-          @click="firstPage()"
+          @click.prevent="firstPage()"
         >
           <font-awesome-icon :icon="['fa', 'angles-left']" />
-        </a>
+        </button>
       </li>
       <li>
-        <a
+        <button
           class="pagination-link"
           :class="{ 'opacity-35': current_page === 1 }"
-          href="#!"
-          @click="prevPage()"
+          @click.prevent="prevPage()"
         >
           <font-awesome-icon :icon="['fa', 'chevron-left']" />
-        </a>
+        </button>
       </li>
       <li v-for="pageNumber in listPages" :key="pageNumber">
-        <a
+        <button
           :class="{ 'pagination-link': pageNumber !== current_page, current: pageNumber === current_page }"
-          href="#!"
-          @click="getPage(pageNumber)"
+          @click.prevent="getPage(pageNumber)"
         >
           {{ pageNumber }}
-        </a>
+        </button>
       </li>
       <li>
-        <a
+        <button
           class="pagination-link"
           :class="{ 'opacity-35': props.last_page === 1 }"
-          href="#!"
-          @click="nextPage()"
+          @click.prevent="nextPage()"
         >
           <font-awesome-icon :icon="['fa', 'chevron-right']" />
-        </a>
+        </button>
       </li>
       <li>
-        <a
+        <button
           class="pagination-link"
           :class="{ 'opacity-35': props.last_page === 1 }"
-          href="#!"
-          @click="lastPage()"
+          @click.prevent="lastPage()"
         >
           <font-awesome-icon :icon="['fa', 'angles-right']" />
-        </a>
+        </button>
       </li>
     </ul>
   </nav>

@@ -6,11 +6,12 @@ import MenuElement from './MenuElement.vue'
     <div class="flex flex-col justify-between h-full px-[20px] space-y-[10px]">
       <div class="flex flex-col justify-between space-y-[10px]">
         <MenuElement :link="{ to: { name: 'dashboard' }, text: 'Escritorio' }" />
-        <div>Configuraciones</div>
-        <MenuElement :link="{ to: { name: 'user.list' }, text: 'Usuarios' }" />
+        <div>Gestión</div>
         <MenuElement :link="{ to: { name: 'field.list' }, text: 'Campos' }" />
         <MenuElement :link="{ to: { name: 'quarter.list' }, text: 'Cuarteles' }" />
         <MenuElement :link="{ to: { name: 'plant.list' }, text: 'Plantas' }" />
+        <div>Configuraciones</div>
+        <MenuElement :link="{ to: { name: 'user.list' }, text: 'Usuarios' }" />
       </div>
     </div>
   </aside>

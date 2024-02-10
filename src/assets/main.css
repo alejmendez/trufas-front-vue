@@ -66,15 +66,18 @@ body {
     list-style: none;
   }
 
-  .pagination ul li a.pagination-link {
+  .pagination ul li button {
+    min-width: 40px;
+  }
+  .pagination ul li button.pagination-link {
     @apply relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white;
   }
 
-  .pagination ul li a.current {
+  .pagination ul li button.current {
     @apply relative block rounded bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700 transition-all duration-300;
   }
 
-  .pagination ul li a.current span {
+  .pagination ul li button.current span {
     @apply absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)];
   }
 }
