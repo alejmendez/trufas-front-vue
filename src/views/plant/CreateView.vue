@@ -72,7 +72,9 @@ const changeFileHandler = (e) => {
 const fieldIdChangeHandler = async (e) => {
   try {
     quarterSelect.value = await quarterService.getListSelect({
-      field_id: form.value.field_id
+      filter: {
+        field_id: form.value.field_id,
+      },
     })
   } catch (error) {
     console.log(error)
