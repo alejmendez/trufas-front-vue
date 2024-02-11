@@ -125,39 +125,39 @@ const fieldIdChangeHandler = async (e) => {
           <TextElement
             name="name"
             :label="t('plant.form.name.label')"
-            :plant-name="t('plant.form.name.name')"
+            :field-name="t('plant.form.name.name')"
             :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
 
           <TextElement
             name="type"
             :label="t('plant.form.type.label')"
-            :plant-name="t('plant.form.type.name')"
+            :field-name="t('plant.form.type.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="age"
             :label="t('plant.form.age.label')"
-            :plant-name="t('plant.form.age.name')"
+            :field-name="t('plant.form.age.name')"
             rules="required|max:255"
           />
           <TextElement
             name="planned_at"
             :label="t('plant.form.planned_at.label')"
-            :plant-name="t('plant.form.planned_at.name')"
+            :field-name="t('plant.form.planned_at.name')"
             rules="required|max:255"
           />
           <TextElement
             name="manager"
             :label="t('plant.form.manager.label')"
-            :plant-name="t('plant.form.manager.name')"
+            :field-name="t('plant.form.manager.name')"
             :rules="['required', 'min:3', 'max:255', 'regex:/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/']"
           />
           <TextElement
             name="code"
             :label="t('plant.form.code.label')"
-            :plant-name="t('plant.form.code.name')"
+            :field-name="t('plant.form.code.name')"
             rules="required|max:255"
           />
         </Vueform>
@@ -176,7 +176,7 @@ const fieldIdChangeHandler = async (e) => {
       <div class="p-6">
         <Vueform
           ref="formLocation$"
-          v-model="form"
+          v-model="formLocation"
           :endpoint="false"
           @submit="submitHandler"
           :columns="{ container: 6, label: 12, wrapper: 12 }"
@@ -208,14 +208,14 @@ const fieldIdChangeHandler = async (e) => {
           <TextElement
             name="location"
             :label="t('plant.form.location.label')"
-            :plant-name="t('plant.form.location.name')"
+            :field-name="t('plant.form.location.name')"
             rules="required|max:255"
           />
 
           <TextElement
             name="location_xy"
             :label="t('plant.form.location_xy.label')"
-            :plant-name="t('plant.form.location_xy.name')"
+            :field-name="t('plant.form.location_xy.name')"
             rules="required|max:255"
           />
         </Vueform>
