@@ -48,9 +48,9 @@ export const getRefreshToken = async () => {
   return data
 }
 
-let refreshTime = 1000 * 60 * 30
-let refreshInterval = setInterval(() => getRefreshToken(), refreshTime)
-setTimeout(statusToken, 10)
+let refreshTime = 1000 * 60 * 5
+let refreshInterval = setInterval(getRefreshToken, refreshTime)
+setTimeout(statusToken, 5000)
 
 export const getCurrentUser = () => {
   const store = useAuthStore()
